@@ -1,0 +1,16 @@
+
+<div class="form">
+    <h1 mat-dialog-title class="header">Gib eine URL ein</h1>
+    <div mat-dialog-content>
+      <mat-form-field>
+        <input matInput placeholder="Example: www.google.de" [(ngModel)]="link" class="placeholder">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Name" [(ngModel)]="label" class="placeholderName">
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Abbrechen</button>
+      <button mat-button (click)="onSave()">Hinzufügen</button>
+    </div>
+  </div>
