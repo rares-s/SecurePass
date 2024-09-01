@@ -5,14 +5,15 @@ import { provideRouter, Routes } from '@angular/router';
 import { authInterceptor } from './app/auth.interceptor';
 import { LoginComponent } from './app/login/login.component';
 import { RegisterComponent } from './app/register/register.component';
+import { MainContentComponent } from './app/main-content/main-content.component';
+import { AuthGuard } from './app/auth.guard';
 
 
-const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+export const routes: Routes = [
+  { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: AppComponent },  // Dashboard-Komponente
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login' }  // Wildcard für ungültige Routen
+  { path: 'dashboard', component: MainContentComponent },
+  { path: 'dashboard', component: MainContentComponent, canActivate: [AuthGuard] }  //AuthGuard später wieder entfernen
 ];
 
 
@@ -24,3 +25,6 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptors([authInterceptor]))  // AuthInterceptor hier einbinden
   ]
 }).catch(err => console.error(err));
+
+
+
