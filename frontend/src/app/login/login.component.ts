@@ -36,7 +36,7 @@ export class LoginComponent {
 
   // Methode zum direkten Zugriff auf das Dashboard ohne Login
   skipLogin() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/home']);
   }
   // Methode zum direkten Zugriff auf das Dashboard ohne Login
   routeRegistrieren() {

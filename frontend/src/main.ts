@@ -7,17 +7,25 @@ import { LoginComponent } from './app/login/login.component';
 import { RegisterComponent } from './app/register/register.component';
 import { MainContentComponent } from './app/main-content/main-content.component';
 import { AuthGuard } from './app/auth.guard';
+import { DashboardComponent } from './app/main-content/dashboard/dashboard.component';
+import { ProfilComponent } from './app/main-content/profil/profil.component';
 
+const routes: Routes = [
+  { path: '', component: LoginComponent }, // Route zur Login-Seite
+  { path: 'register', component: RegisterComponent }, // Route zur Registrierungsseite
+  {
+    path: 'home',
+    component: MainContentComponent,
+    // canActivate: [AuthGuard], // AuthGuard schützt die Homepage
+      children: [
+      { path: '', component: DashboardComponent }, // Standard-Route für Homepage
+      { path: 'dashboard', component: DashboardComponent }, // Weitere Child-Routen
+      { path: 'profil', component: ProfilComponent } // Weitere Child-Routen
 
-export const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: MainContentComponent },
-  { path: 'dashboard', component: MainContentComponent, canActivate: [AuthGuard] }  //AuthGuard später wieder entfernen
+    ]
+  },
+  
 ];
-
-
-
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -25,6 +33,3 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptors([authInterceptor]))  // AuthInterceptor hier einbinden
   ]
 }).catch(err => console.error(err));
-
-
-

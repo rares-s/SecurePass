@@ -1,111 +1,49 @@
-.spacer {
-    height: 15px;
-}
+.main-content {
+  display: flex;
+  height: 100vh;
 
-.mat-toolbar{
-  padding: 0 24px;
-}
-
-.navbar {
-  background: #f7f7f7;  
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  padding: 12px; 
-  }
-
-  .upperPartOfPage{
-    padding: 24px;
-  }
-
-.allCards{
+  .sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 24px;
-    gap: 24px;
-
-}
-
-  .card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70px;
-    width: 140px;
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 24px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; 
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    border-radius: 12px;
-    background: linear-gradient(135deg, #0078d7, #709bec);
+    flex-direction: column;
+    padding: 16px;
+    position: relative; /* Stelle sicher, dass die Sidebar relativ positioniert ist */
+    z-index: 1000; /* Setze den Z-Index höher, wenn notwendig */
     
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 16px;
+
+        a {
+          cursor: pointer;
+          color: #fff;
+          text-decoration: none;
+          font-size: 18px;
+          display: block;
+          padding: 8px;
+          border-radius: 4px; /* Optional: Fügt abgerundete Ecken hinzu */
+
+          &:hover {
+            background-color: #555;
+          }
+
+          &.active {
+            background-color: #0078d7;
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 
-  .card:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+  .content {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
   }
-
-  .youtube{
-    background: linear-gradient(135deg, #FF0000, #ff0000);
-
-  }
-  
-  .chatgpt{
-    background: linear-gradient(135deg, rgb(150, 150, 150), rgb(255, 255, 255));
-    color: #000000 !important;
-  }
-
-  .blackboxai{
-    background: linear-gradient(135deg, rgb(150, 150, 150), rgb(255, 255, 255));
-    color: #000000 !important;
-  }
-
-  .yahoo {
-    background: linear-gradient(135deg, #4b04a7, #e073fb);
-
-  }
-  
-  .outlook {
-    background: linear-gradient(135deg, #0078d7, #709bec);
-
-  }
-  
-  .teams {
-    background: linear-gradient(135deg, #2c2fa1, #8B94B3);
-
-  }
-
-  .text {
-    color: #f7f7f7;
-  }
-
-  .hinzufuegen {
-    align-items: center;
-    text-align: center;
-    background: #9d949469;
-
-  }
-
-  .button-delete{
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: -12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; 
-    background: linear-gradient(135deg, rgba(58, 76, 211, 0.123), rgba(255, 255, 255, 0.2));
-    border-radius: 8px;
-    cursor: pointer;
-    height: 30px;
-    width: 30%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .button-delete:hover{
-    transform: translateY(-5px); 
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    background: rgba(255, 255, 255, 0.275);
-  }
+}
