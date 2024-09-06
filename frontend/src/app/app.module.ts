@@ -12,12 +12,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { LinkDialogComponent } from './link-dialog/link-dialog.component'; 
-
-import { LoginComponent } from './login/login.component';  // Login Komponente importieren
-import { RegisterComponent } from './register/register.component';  // Register Komponente importieren
 import { authInterceptor } from './auth.interceptor';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RegisterComponent } from './register/register.component';  // Register Komponente importieren
+import { LoginComponent } from './login/login.component';  // Login Komponente importieren
+import { LinkDialogComponent } from './link-dialog/link-dialog.component'; 
 
 
 

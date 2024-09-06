@@ -9,6 +9,8 @@ import { MainContentComponent } from './app/main-content/main-content.component'
 import { AuthGuard } from './app/auth.guard';
 import { DashboardComponent } from './app/main-content/dashboard/dashboard.component';
 import { ProfilComponent } from './app/main-content/profil/profil.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const routes: Routes = [
   { path: '', component: LoginComponent }, // Route zur Login-Seite
@@ -30,6 +32,6 @@ const routes: Routes = [
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor]))  // AuthInterceptor hier einbinden
-  ]
+    provideHttpClient(withInterceptors([authInterceptor])), provideAnimationsAsync()  // AuthInterceptor hier einbinden
+  ],
 }).catch(err => console.error(err));

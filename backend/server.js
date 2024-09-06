@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const linkRoutes = require('./routes/links');
+const userRoutes = require('./routes/users');
 const cors = require('cors');
 
 const app = express();
@@ -19,6 +20,9 @@ db.once('open', () => console.log('Connected to Database'));
 
 // Routes verwenden
 app.use('/api/links', linkRoutes);
+app.use('/api/users', userRoutes);
+
+
 
 // Server starten
 const PORT = process.env.PORT || 3000;
