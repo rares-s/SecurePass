@@ -19,24 +19,41 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   onSubmit() {
+    if (!this.email || !this.password) {
+      console.error('Bitte geben Sie Benutzername und Passwort ein');
+      return;
+    }
+  
+    if (!this.validateEmail(this.email)) {
+      console.error('Bitte geben Sie eine korrekte E-Mail-Adresse ein');
+      return;
+    }
+  
+    // Wenn die Eingaben korrekt sind, sende die Anfrage an den Server
     this.http.post('http://localhost:3000/api/auth/login', { 
       email: this.email, 
       password: this.password 
-    }).subscribe({
+    })
+    .subscribe({
       next: (response: any) => {
         localStorage.setItem('token', response.token);
-        alert('Logged in successfully!');
-        this.router.navigate(['/dashboard']);  // Weiterleitung zum Dashboard
+        this.router.navigate(['/home/dashboard']);  // Weiterleitung zum Dashboard
       },
       error: (error) => {
         console.error('Login failed', error);
       }
     });
   }
-
+  
+  validateEmail(email: string) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+  
+  
   // Methode zum direkten Zugriff auf das Dashboard ohne Login
   skipLogin() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/home/dashboard']);  
   }
   // Methode zum direkten Zugriff auf das Dashboard ohne Login
   routeRegistrieren() {

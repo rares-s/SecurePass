@@ -6,6 +6,9 @@
                 <mat-icon>menu</mat-icon>
             </button>
             <span style="display:flex; justify-content: center; text-align: center;">SecurePass</span>
+            <button mat-button (click)="onLogout()" style="margin-left: auto;">
+                Logout
+            </button>
         </mat-toolbar>
         <div class="spacer"></div>
     </div>
@@ -65,18 +68,22 @@
         </div>
 
 
-        <div class="mat-cards" *ngFor="let x of links">
-            <a [href]="x.url" target="_blank" style="text-decoration: none;"> <!-- Öffnet die URL in einem neuen Tab -->
-                <mat-card class="card">
-                    <span class="text">{{ x.title }}</span> <!-- Zeigt den Titel des Links an -->
-                </mat-card>
-            </a>
+        <div *ngFor="let x of links" class="mat-cards">
+            <mat-card (click)="openDetailDialog(x)" class="card" [ngStyle]="{'background': x.gradient}">
+              <mat-card-title>
+                <a [href]="x.url" target="_blank" (click)="$event.stopPropagation()" style="text-decoration: none;">
+                  {{ x.title }} <!-- Öffnet die URL in einem neuen Tab, ohne das Dialog-Ereignis auszulösen -->
+                </a>
+              </mat-card-title>
+            </mat-card>
+          
             <div class="button-delete">
-                <button mat-icon-button (click)="deleteCard(x._id)">
-                    <mat-icon>delete</mat-icon>
-                </button>
+              <button mat-icon-button (click)="deleteCard(x._id); $event.stopPropagation()"> <!-- Stoppt das Event, um den Dialog nicht zu öffnen -->
+                <mat-icon>delete</mat-icon>
+              </button>
             </div>
-        </div>
+          </div>
+          
 
 
         <!-- Button zum Öffnen des Dialogs zum Hinzufügen neuer Kacheln -->

@@ -1,59 +1,66 @@
+// routes/tiles.js
 const express = require('express');
 const router = express.Router();
-const Link = require('../models/Link');
 const User = require('../models/User');
 const { authMiddleware } = require('../middleware/authMiddleware');
 
-// Alle Links des angemeldeten Benutzers abrufen
+// Alle Kacheln des angemeldeten Benutzers abrufen
 router.get('/', authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId).populate('links');
+    const user = await User.findById(req.user.id); // Verwende "id" und nicht "userId"
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    res.json(user.links);
+    res.json(user.websites); // Gebe die Webseiten des Benutzers zurück
   } catch (error) {
+    console.error('Server error while fetching websites:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Neuen Link erstellen und mit dem Benutzerprofil verknüpfen
+// Neue Kachel erstellen
 router.post('/', authMiddleware, async (req, res) => {
+  const { title, url, password, description } = req.body;
+
+  // Füge eine Validierung der Anfrage hinzu
+  if (!title || !url || !password ) {
+    return res.status(400).json({ message: 'Title and URL are required' });
+  }
+
   try {
-    const { title, url } = req.body;
-    const user = await User.findById(req.user.userId);
-    
+    console.log('Received body:', req.body);
+    const user = await User.findById(req.user.id);
+    console.log('User found:', user);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const newLink = new Link({ title, url });
-    await newLink.save();
-
-    user.links.push(newLink._id);
+    const newWebsite = { title, url, password, description }; // Verwende "websites" statt "tiles"
+    user.websites.push(newWebsite);  // Füge die neue Webseite zu "websites" hinzu
     await user.save();
-
-    res.status(201).json(newLink);
+    res.status(201).json(newWebsite);  // Gib die neu erstellte Webseite zurück
   } catch (error) {
+    console.error('Server error while creating a new website:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Link löschen
-router.delete('/:id', authMiddleware, async (req, res) => {
+
+// Kachel löschen
+router.delete('/:websiteId', authMiddleware, async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId);
-    
+    const user = await User.findById(req.user.id); // Stelle sicher, dass du `id` verwendest und nicht `userId`
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    user.links.pull(req.params.id);
+    // Filtere die Webseite, die gelöscht werden soll
+    user.websites = user.websites.filter(website => website._id.toString() !== req.params.websiteId);
     await user.save();
 
-    await Link.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Link removed' });
+    res.json({ message: 'Website removed' });
   } catch (error) {
+    console.error('Server error while deleting website:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

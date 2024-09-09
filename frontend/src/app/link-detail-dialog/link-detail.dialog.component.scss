@@ -1,0 +1,22 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.mat-form-field {
+  margin-bottom: 16px;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  margin-right: 8px;
+}

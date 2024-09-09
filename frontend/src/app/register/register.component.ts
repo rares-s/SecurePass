@@ -17,24 +17,29 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  username: string = '';
   email: string = '';
   password: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  onSubmit() {
+    console.log('Email:', this.email, 'Password:', this.password); // Debugging hinzugefügt
+  
+    this.http.post('http://localhost:3000/api/auth/register', { email: this.email, password: this.password })
+      .subscribe({
+        next: (response: any) => {
+          localStorage.setItem('token', response.token);  // Speichere den Token
+          this.router.navigate(['/home/dashboard']);      // Weiterleiten nach Registrierung
+        },
+        error: (error) => {
+          alert('Registrierung fehlgeschlagen. Überprüfen Sie Ihre Daten.');
+          console.error('Registration failed', error);
+        }
+      });
+  }
 
-onSubmit() {
-  this.http.post('http://localhost:3000/api/auth/login', { email: this.email, password: this.password })
-    .subscribe({
-      next: (response: any) => {
-        localStorage.setItem('token', response.token);  // Speichere den Token
-        this.router.navigate(['/dashboard']);           // Weiterleiten nach Login
-      },
-      error: (error) => {
-        alert('Login fehlgeschlagen. Überprüfen Sie Ihre Anmeldedaten.');
-        console.error('Login failed', error);
-      }
-    });
-}
+  routeLogin() {
+    this.router.navigate(['/']); // Navigiere zur Login-Seite
+  }
+  
 }

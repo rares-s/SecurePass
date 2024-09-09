@@ -24,13 +24,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 export class LinkDialogComponent {
   public link: string = ''; 
   public label: string = '';
+  public password: string= '';
  
   
   constructor(public dialogRef: MatDialogRef<LinkDialogComponent>) {}
 
   onSave(): void {
-    if (this.link && this.label) {
-      this.dialogRef.close({ url: this.link, label: this.label }); // Rückgabe von URL und Label
+    if (this.link && this.label && this.password) {
+      this.dialogRef.close({ url: this.link, label: this.label, password: this.password });
     }
   }
 

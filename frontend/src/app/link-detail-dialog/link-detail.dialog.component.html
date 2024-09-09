@@ -1,0 +1,17 @@
+<div class="form">
+    <h1 mat-dialog-title class="header">Webseite Details</h1>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <input matInput [value]="data.url" placeholder="URL" class="placeholder" readonly>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [value]="data.label" placeholder="Name" class="placeholderName" readonly>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput [value]="data.password" placeholder="Password" class="placeholderName" readonly>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onClose()">Schließen</button>
+    </div>
+</div>
