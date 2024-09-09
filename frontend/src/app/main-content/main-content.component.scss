@@ -1,39 +1,132 @@
 mat-drawer-container {
-   height: 100vh !important;
+  height: 100vh !important;
 }
 
 mat-drawer-content {
-  display: flex;
-  flex-direction: column;
-
+ display: flex;
+ flex-direction: column;
 }
 
 .sidenav {
-  background-color: antiquewhite;
-  width: 250px; // Feste Breite für die Sidebar
-  border-radius: 0%;
-  border-bottom: 2px solid rgba(195, 195, 195, 0.25);
+ width: 180px; // Feste Breite für die Sidebar
+ border-radius: 0%;
+ border-bottom: 2px solid rgba(195, 195, 195, 0.25);
+ background-color: #4c50a2; 
+ color: #FFFFFF; // Weiß für Text
+ cursor: default;
+ font-size: 1rem;
+
+a {
+ display: flex;
+ justify-content: flex-start;
+ align-items: center;
+ margin: 20px;
+ color: #FFFFFF; // Weiß für Links
+ font-size: 1rem;
+ background-color: transparent; // Startet ohne Hintergrundfarbe
+ border-radius: 15px; // Initiale Abrundung
+
+ &:hover {
+   background-color: #E07A5F; // Warmkorallenrot beim Hover
+   color: #FFFFFF; // Weißer Text beim Hover
+   border-radius: 15px; // Abrundung beim Hover
+ }
 }
 
+.mdc-list-item--with-leading-icon .mdc-list-itemstart {
+ color: #F0F4F8;
+}
+.mdc-list-item--with-leading-icon:hover .mdc-list-itemstart {
+   color: #E07A5F;
+}
+.mat-mdc-list-item:not(.mat-mdc-list-item-interactive), .mat-mdc-list-option:not(.mat-mdc-list-item-interactive) {
+   cursor: pointer;
+}
+}
 mat-toolbar-row {
-  background-color: antiquewhite;
-  border-bottom: 2px solid rgba(195, 195, 195, 0.25);
+ display: flex;
+ height: 8vh;
+ border-bottom: 2px solid rgba(195, 195, 195, 0.25);
+ background-color: #4c50a2; 
+ color: #FFFFFF; // Weiß für Text
+
+mat-icon {
+ font-size: 1.8rem;
+ cursor: pointer;
+} 
+
+a {
+   color: #FFFFFF; // Weiß für Links
+   &:hover {
+     background-color: #E07A5F; // Warmkorallenrot beim Hover
+     color: #FFFFFF; // Weißer Text beim Hover
+     border-radius: 5px;
+   }
+ }
+}
+
+
+mat-toolbar-row img {
+ width: 80px;
+ border-radius: 10px;
+ margin-left: 10px;
 }
 
 ul {
-  list-style-type: none;
-  padding: 0;
+ list-style-type: none;
+ padding: 0;
 }
 
 li {
-  margin: 10px 0;
+ border-width: 2px;
 }
 
 .router-container {
-  flex-grow: 1; // Damit der Inhalt den verfügbaren Platz einnimmt
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+ flex-grow: 1; // Damit der Inhalt den verfügbaren Platz einnimmt
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ background-color: #F0F4F8; // Helles Grau für den Hintergrund
+ color: #333333; // Dunkles Grau für den Text
+ height: 100vh;
 }
 
+.logout {
+  position: absolute;
+  bottom: 0; /* Positioniert den Button am unteren Rand */
+  left: 0; /* Positioniert den Button am linken Rand */
+  padding: 10px; /* Optional: Abstand hinzufügen */
+  margin-left: 10px; /* Optional: Abstand vom Rand hinzufügen */
+}
 
+.logout:hover{
+  background-color: #e07b5fa0 !important;
+}
+
+.menu-icon {
+  background-color: transparent;
+  border-radius: 12px;
+  padding: 10px;
+  transition: all 0.3s ease-in-out;
+  
+  /* Initialer Zustand */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtile Änderung des Hintergrunds */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sanfter Schatten */
+    transform: scale(1.05); /* Leichte Vergrößerung */
+    border-radius: 50%; /* Runde Form für moderne Optik */
+    cursor: pointer;
+  }
+
+  /* Optional: Ein Übergang, um den Effekt weicher zu machen */
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.spacer{
+  margin-left: 10px;
+  padding: 8px;
+}

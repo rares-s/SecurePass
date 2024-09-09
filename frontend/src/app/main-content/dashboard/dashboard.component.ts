@@ -78,11 +78,6 @@ export class DashboardComponent {
     )
     .subscribe();
   }
-
-  onLogout() {
-    localStorage.removeItem('token');  // Token aus dem Local Storage entfernen
-    this.router.navigate(['/login']);  // Weiterleitung zur Login-Seite
-  }
   
 
 
@@ -144,6 +139,11 @@ createNewCard(title: string, url: string, password: string) {
       catchError(this.handleError)
     )
     .subscribe();
+  }
+
+  onLogout() {
+    localStorage.removeItem('token');  // Token aus dem Local Storage entfernen
+    this.router.navigate(['/login']);  // Weiterleitung zur Login-Seite
   }
   
 

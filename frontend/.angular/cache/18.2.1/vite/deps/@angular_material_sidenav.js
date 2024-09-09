@@ -3,7 +3,8 @@ import {
   CdkScrollableModule,
   ScrollDispatcher,
   ViewportRuler
-} from "./chunk-AU3J76TN.js";
+} from "./chunk-QX4ZQKLO.js";
+import "./chunk-UJPAGQIB.js";
 import {
   animate,
   state,
@@ -19,7 +20,7 @@ import {
   MatCommonModule,
   Platform,
   hasModifierKey
-} from "./chunk-5T4E2LLX.js";
+} from "./chunk-CTE5FZZU.js";
 import {
   Directionality,
   coerceBooleanProperty,
