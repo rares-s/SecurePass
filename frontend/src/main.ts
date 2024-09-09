@@ -9,8 +9,13 @@ import { MainContentComponent } from './app/main-content/main-content.component'
 import { AuthGuard } from './app/auth.guard';
 import { DashboardComponent } from './app/main-content/dashboard/dashboard.component';
 import { ProfilComponent } from './app/main-content/profil/profil.component';
+<<<<<<< HEAD
 import { provideAnimations } from '@angular/platform-browser/animations';
 
+=======
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+>>>>>>> 07a57dc48bac5a2e10302c40a9d575208b2b538d
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent }, // explizite Route für Login
@@ -33,7 +38,12 @@ const routes: Routes = [
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
+<<<<<<< HEAD
     provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimations()
   ]
+=======
+    provideHttpClient(withInterceptors([authInterceptor])), provideAnimationsAsync()  // AuthInterceptor hier einbinden
+  ],
+>>>>>>> 07a57dc48bac5a2e10302c40a9d575208b2b538d
 }).catch(err => console.error(err));

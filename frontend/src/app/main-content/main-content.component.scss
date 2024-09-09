@@ -1,49 +1,39 @@
-.main-content {
-  display: flex;
-  height: 100vh;
-
-  .sidebar {
-    width: 250px;
-    background-color: #333;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    position: relative; /* Stelle sicher, dass die Sidebar relativ positioniert ist */
-    z-index: 1000; /* Setze den Z-Index höher, wenn notwendig */
-    
-    ul {
-      list-style: none;
-      padding: 0;
-
-      li {
-        margin-bottom: 16px;
-
-        a {
-          cursor: pointer;
-          color: #fff;
-          text-decoration: none;
-          font-size: 18px;
-          display: block;
-          padding: 8px;
-          border-radius: 4px; /* Optional: Fügt abgerundete Ecken hinzu */
-
-          &:hover {
-            background-color: #555;
-          }
-
-          &.active {
-            background-color: #0078d7;
-            color: #fff;
-          }
-        }
-      }
-    }
-  }
-
-  .content {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-  }
+mat-drawer-container {
+   height: 100vh !important;
 }
+
+mat-drawer-content {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.sidenav {
+  background-color: antiquewhite;
+  width: 250px; // Feste Breite für die Sidebar
+  border-radius: 0%;
+  border-bottom: 2px solid rgba(195, 195, 195, 0.25);
+}
+
+mat-toolbar-row {
+  background-color: antiquewhite;
+  border-bottom: 2px solid rgba(195, 195, 195, 0.25);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 10px 0;
+}
+
+.router-container {
+  flex-grow: 1; // Damit der Inhalt den verfügbaren Platz einnimmt
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+
