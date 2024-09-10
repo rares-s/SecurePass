@@ -26,7 +26,7 @@ import { LinkDialogComponent } from '../../link-dialog/link-dialog.component';
 })
 export class DashboardComponent {
   title = 'SecurePass';
-  links: { _id: string, title: string, url: string, password: string, gradient?: string }[] = [];
+  links: { _id: string, title: string, url: string, password: string, gradient: string }[] = [];
   newLink: string = '';
   newLabel: string = ''; // Neuer Label für den Link
   showLinkInput: boolean = false;
@@ -71,7 +71,8 @@ export class DashboardComponent {
           _id: link._id,
           title: link.title,
           url: link.url,
-          password: link.password || ''  // Falls das Passwort nicht vorhanden ist, setze es auf einen leeren String
+          password: link.password || '',  // Falls das Passwort nicht vorhanden ist, setze es auf einen leeren String
+          gradient: link.gradient || ''
         }));
       }),
       catchError(this.handleError)
@@ -85,28 +86,23 @@ export class DashboardComponent {
 openDialog(): void {
   console.log('Opening dialog...');
   const dialogRef = this.dialog.open(LinkDialogComponent);
+  // Generiere den zufälligen Farbverlauf
+  const gradient = this.generateRandomGradient();
 
-  dialogRef.afterClosed().subscribe((result: { url: string; label: string; password: string; }) => {
+  dialogRef.afterClosed().subscribe((result: { url: string; label: string; password: string; gradient: string }) => {
     if (result) {
+      result.gradient = gradient;
       console.log('Dialog result:', result);
-      this.createNewCard(result.url, result.label, result.password);
+      this.createNewCard(result.url, result.label, result.password, result.gradient);
     }
   });
 }
 
 // Neue Kachel erstellen (mit Passwort und Farbverlauf)
-createNewCard(title: string, url: string, password: string) {
+createNewCard(title: string, url: string, password: string, gradient: string) {
   const token = localStorage.getItem('token');
   
-  // URL-Format prüfen
-  if (!/^https?:\/\//i.test(title)) {
-    title = 'https://' + title;
-  }
-
-  // Generiere den zufälligen Farbverlauf
-  const gradient = this.generateRandomGradient();
-
-  const newLink = { title: url, url: title, password, gradient: this.generateRandomGradient() }; // Füge den Gradient hinzu
+  const newLink = { title: url, url: title, password, gradient }; // Gradient als String hinzufügen
 
   this.http.post('http://localhost:3000/api/links', newLink, {
     headers: { Authorization: `Bearer ${token}` }
@@ -114,7 +110,7 @@ createNewCard(title: string, url: string, password: string) {
   .pipe(
     tap((data: any) => {
       console.log('Created new link:', data);
-      this.links.push({ ...data, gradient: this.generateRandomGradient() });
+      this.links.push({ ...data}); // Gradient zum Link hinzufügen
     }),
     catchError(this.handleError)
   )
@@ -174,7 +170,7 @@ generateRandomGradient(): string {
   return `linear-gradient(135deg, ${randomColor1}, ${randomColor2})`;
 }
 
-  
+
 }
   
 

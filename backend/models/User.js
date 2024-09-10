@@ -7,6 +7,7 @@ const WebsiteDataSchema = new Schema({
   title: { type: String, required: true },  // Name der Webseite
   url: { type: String, required: true },    // URL der Webseite
   password: { type: String, required: false },
+  gradient: { type: String, required: false },
   description: { type: String, required: false },  // Gespeichertes Passwort für die Webseite
   timestamp: { type: Date, default: Date.now } // Zeitstempel der Erstellung
 });

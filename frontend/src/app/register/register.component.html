@@ -5,27 +5,27 @@
         <img src="../../assets/logo-securepass.svg" alt="">
         <h2>Registrieren</h2>
       </div>
+
+      <form (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="email" name="email" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Passwort</mat-label>
+          <input matInput [(ngModel)]="password" name="password" type="password" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Passwort wiederholen</mat-label>
+          <input matInput [(ngModel)]="passwordConfirm" name="passwordConfirm" type="password" required>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit">Bestätigen</button>
+        <button mat-raised-button (click)="routeLogin()">Zurück zum Login</button>
+      </form>
     </div>
-    <form (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="email" name="email" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Passwort</mat-label>
-        <input matInput [(ngModel)]="password" name="password" type="password" required>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
-        <mat-label>Passwort wiederholen</mat-label>
-        <input matInput [(ngModel)]="passwordConfirm" name="passwordConfirm" type="password" required>
-      </mat-form-field>
-
-      <button mat-flat-button color="primary" type="submit">Bestätigen</button>
-      <button mat-raised-button (click)="routeLogin()">Zurück zum Login</button>
-    </form>
-
     <!-- Button zum Zurück zum Login -->
   </div>
 </div>

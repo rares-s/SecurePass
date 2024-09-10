@@ -15,16 +15,15 @@
 .login-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   max-width: 400px;
-  height: auto;
+  height: 100vh;
   width: 100%;
-  padding: 0px 20px 20px 20px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Leichterer, weicherer Schatten */
   border-radius: 25px;
   backdrop-filter: blur(100px); /* Weichzeichnereffekt für den Apple-Look */
   opacity: 0.96;
 }
-
 
 .login-container h2 {
   font-size: 24px;
@@ -34,10 +33,12 @@
   margin-bottom: 30px;
 }
 
-mat-form-field {
-  width: 100%;
-  margin-bottom: 20px;
+.login {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
 }
+
 
 button {
   width: 100%;

@@ -20,10 +20,10 @@ router.get('/', authMiddleware, async (req, res) => {
 
 // Neue Kachel erstellen
 router.post('/', authMiddleware, async (req, res) => {
-  const { title, url, password, description } = req.body;
+  const { title, url, password, gradient, description } = req.body;
 
   // Füge eine Validierung der Anfrage hinzu
-  if (!title || !url || !password ) {
+  if (!title || !url || !password) {
     return res.status(400).json({ message: 'Title and URL are required' });
   }
 
@@ -35,7 +35,7 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const newWebsite = { title, url, password, description }; // Verwende "websites" statt "tiles"
+    const newWebsite = { title, url, password, gradient, description }; // Verwende "websites" statt "tiles"
     user.websites.push(newWebsite);  // Füge die neue Webseite zu "websites" hinzu
     await user.save();
     res.status(201).json(newWebsite);  // Gib die neu erstellte Webseite zurück

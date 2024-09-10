@@ -16,14 +16,21 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  align-items: center;
   max-width: 400px;
   width: 100%;
-  height: auto;
-  padding: 0px 20px 20px 20px;
+  height: 100vh;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Leichterer, weicherer Schatten */
   border-radius: 25px;
   backdrop-filter: blur(100px); /* Weichzeichnereffekt für den Apple-Look */
   opacity: 0.96;
+}
+
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 300px;
 }
 
 .register-titel {
