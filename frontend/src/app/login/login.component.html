@@ -3,25 +3,24 @@
 
     <div class="login">
       <div class="login-titel">
-    <h2>Login</h2>
-    <img src="../../assets/logo-securepass.svg" alt="">
-  </div>
-    <form (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="email" name="email" required>
-      </mat-form-field>
+        <img src="../../assets/logo-securepass.svg" alt="">
+        <h2>Login</h2>
+      </div>
+      <form (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="email" name="email" required>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input matInput [(ngModel)]="password" name="password" type="password" required>
-      </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Passwort</mat-label>
+          <input matInput [(ngModel)]="password" name="password" type="password" required>
+        </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">Login</button>
-    </form>
+        <button mat-flat-button color="primary" type="submit">Login</button>
+        <button mat-raised-button (click)="routeRegistrieren()">Registrieren</button>
+      </form>
 
-    <button mat-button (click)="routeRegistrieren()">Registrieren</button>
-  </div>
+    </div>
   </div>
 </div>
-

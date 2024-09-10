@@ -19,10 +19,19 @@ import { MatButtonModule } from '@angular/material/button';
 export class RegisterComponent {
   email: string = '';
   password: string = '';
+  passwordConfirm: string = ''; 
 
   constructor(private http: HttpClient, private router: Router) {}
 
   onSubmit() {
+
+    if (this.password !== this.passwordConfirm) {  // Überprüfe, ob die Passwörter übereinstimmen
+      alert('Passwörter stimmen nicht überein.');
+      this.password = '';  // Leere das Passwortfeld
+      this.passwordConfirm = '';  // Leere das Bestätigungs-Passwortfeld
+      return;
+    }
+
     console.log('Email:', this.email, 'Password:', this.password); // Debugging hinzugefügt
   
     this.http.post('http://localhost:3000/api/auth/register', { email: this.email, password: this.password })

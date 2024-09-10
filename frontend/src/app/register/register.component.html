@@ -1,22 +1,31 @@
 <div class="full-page">
   <div class="register-container">
-    <h2>Register</h2>
+    <div class="register">
+      <div class="register-titel">
+        <img src="../../assets/logo-securepass.svg" alt="">
+        <h2>Registrieren</h2>
+      </div>
+    </div>
     <form (ngSubmit)="onSubmit()">
-
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
         <input matInput [(ngModel)]="email" name="email" required>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
+        <mat-label>Passwort</mat-label>
         <input matInput [(ngModel)]="password" name="password" type="password" required>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">Register</button>
+      <mat-form-field appearance="fill">
+        <mat-label>Passwort wiederholen</mat-label>
+        <input matInput [(ngModel)]="passwordConfirm" name="passwordConfirm" type="password" required>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="submit">Bestätigen</button>
+      <button mat-raised-button (click)="routeLogin()">Zurück zum Login</button>
     </form>
 
     <!-- Button zum Zurück zum Login -->
-    <button mat-button (click)="routeLogin()">Zurück zum Login</button>
   </div>
 </div>

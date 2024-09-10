@@ -1,50 +1,35 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f2f2f7; /* Apple-like Hintergrundfarbe */
-  gap: 0%;
-}
-
 .full-page {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #4c50a2;
-  gap: 0%;
   flex-wrap: wrap;
-  background-image: url("../../assets/securepass.svg"); /* Das Bild */
+  background-image: url("../../assets/securepass2.svg"); /* Das Bild */
   background-size: cover; /* Vollständig das Containerfeld füllen */
   background-position: center; /* Zentrieren */
   background-repeat: no-repeat; /* Keine Wiederholung */
   background-blend-mode: overlay; /* Blendeffekt für Überlagerung */
-
 }
 
 .login-container {
   display: flex;
   justify-content: center;
-  max-width: 450px;
-  height: 450px;
+  max-width: 400px;
+  height: auto;
   width: 100%;
-  padding: 40px;
+  padding: 0px 20px 20px 20px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Leichterer, weicherer Schatten */
-  border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.9); /* Leichte Transparenz */
-  backdrop-filter: blur(10px); /* Weichzeichnereffekt für den Apple-Look */
-  opacity: 0.9;
-
+  border-radius: 25px;
+  backdrop-filter: blur(100px); /* Weichzeichnereffekt für den Apple-Look */
+  opacity: 0.96;
 }
 
 
 .login-container h2 {
   font-size: 24px;
   font-weight: 600;
-  color: #333;
+  color: white;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -85,14 +70,12 @@ button.mat-button:hover {
 
 .login-titel {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   img {
-    width: 100px;
+    width: 150px;
     height: auto;
-  }
-  h2{
-    margin: 0;
   }
 }
 
@@ -100,4 +83,41 @@ img{
   width: 450px;
   height: 450px;
   border-radius: 8px;
+}
+
+// ----------------------------
+
+// Kompakteres Design für die Input-Felder
+mat-form-field {
+  width: 100%;  // Breite des Feldes
+  margin-bottom: 2px;  // Reduziere den Abstand zwischen den Feldern
+  
+  .mat-form-field-wrapper {
+    padding-bottom: 0;  // Reduziere den Abstand im Inneren
+  }
+  
+  .mat-input-element {
+    font-size: 14px;  // Kleinere Schriftgröße
+    padding: 8px;  // Weniger Innenabstand
+  }
+
+  .mat-form-field-label {
+    font-size: 12px;  // Kleinere Beschriftung
+  }
+}
+
+// Kompakteres Design für die Buttons
+button {
+  min-width: unset;  // Entferne die minimale Breite
+  padding: 4px 12px;  // Reduziere das Padding im Inneren
+  font-size: 14px;  // Kleinere Schriftgröße
+  margin-top: 12px;  // Reduziere den oberen Abstand zum Button
+
+  &.mat-raised-button {
+    height: 36px;  // Kleinere Höhe für die Buttons
+  }
+
+  &.mat-button {
+    height: 32px;  // Höhe für flache Buttons
+  }
 }
