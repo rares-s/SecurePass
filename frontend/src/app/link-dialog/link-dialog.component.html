@@ -3,9 +3,9 @@
   <div mat-dialog-content class="matdiv">
 
     <div class="farbenAuswahl" style="display: flex; align-items: center; flex-direction: row; padding-left: 0px;">
-      <mat-card style="display: flex; flex-direction: row;" appearance="outlined">
+      <mat-card style="display: flex; flex-direction: row; width: 450px" appearance="outlined">
         <mat-card-content>Farbe auswählen: </mat-card-content>
-        <color-chrome [(color)]="selectedColor" (onChange)="onColorChange($event.color.hex)"></color-chrome>
+        <color-chrome [(color)]="selectedColor" (onChange)="onColorChange($event.color.hex)" style="margin-left: 24px;"></color-chrome>
       </mat-card>
     </div>
 

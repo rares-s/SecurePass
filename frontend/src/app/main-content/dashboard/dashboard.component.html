@@ -3,56 +3,6 @@
     
     <div class="allCards" fxLayout="row wrap">
 
-        <div class="mat-cards">
-            <a href="https://chatgpt.com/c/8dac452e-3083-48f9-8ec4-24023ad48a15" target="_blank"
-                style="text-decoration: none;">
-                <mat-card class="card chatgpt">
-                    <span class="text">Chat GPT</span>
-                </mat-card>
-            </a>
-        </div>
-
-        <div class="mat-cards">
-            <a href="https://youtube.com" target="_blank" style="text-decoration: none;">
-                <mat-card class="card youtube">
-                    <span class="text">Youtube</span>
-                </mat-card>
-            </a>
-        </div>
-
-        <div class="mat-cards">
-            <a href="https://www.blackbox.ai" target="_blank" style="text-decoration: none;">
-                <mat-card class="card blackboxai">
-                    <span class="text">Blackbox AI</span>
-                </mat-card>
-            </a>
-        </div>
-
-        <div class="mat-cards">
-            <a href="https://www.yahoo.de" target="_blank" style="text-decoration: none;">
-                <mat-card class="card yahoo">
-                    <span class="text">Yahoo!</span>
-                </mat-card>
-            </a>
-        </div>
-
-        <div class="mat-cards">
-            <a href="https://outlook.office365.com/mail/" target="_blank" style="text-decoration: none;">
-                <mat-card class="card outlook">
-                    <span class="text">Outlook</span>
-                </mat-card>
-            </a>
-        </div>
-
-        <div class="mat-cards">
-            <a href="https://teams.microsoft.com/v2" target="_blank" style="text-decoration: none;">
-                <mat-card class="card teams">
-                    <span class="text">Teams</span>
-                </mat-card>
-            </a>
-        </div>
-
-
         <div *ngFor="let x of links" class="mat-cards">
             <!-- Klicke auf die gesamte Karte, um den Dialog zu öffnen -->
             <mat-card (click)="openDetailDialog(x)" class="card" [ngStyle]="{'background': x.gradient}">
@@ -81,11 +31,6 @@
                 <mat-icon class="plus">add_circle_outline</mat-icon>
             </mat-card>
         </div>
-
-
-
-
-
 
 
     </div>

@@ -8,9 +8,9 @@ mat-drawer-content {
 }
 
 .sidenav {
- width: 225px; // Feste Breite für die Sidebar
+ width: 185px; // Feste Breite für die Sidebar
  border-radius: 0%;
- border-bottom: 2px solid rgba(195, 195, 195, 0.25);
+ border-bottom: 2px rgba(195, 195, 195, 0.25);
  background-color: #4c50a2; 
  color: #FFFFFF; // Weiß für Text
  cursor: default;
@@ -45,7 +45,7 @@ a {
 }
 mat-toolbar-row {
  display: flex;
- height: 10vh;
+ height: 11.7vh;
  border-bottom: 2px solid rgba(195, 195, 195, 0.25);
  background-color: #4c50a2; 
  color: #FFFFFF; // Weiß für Text
@@ -64,7 +64,10 @@ a {
    }
  }
 }
-
+mat-toolbar-row {
+  position: absolute;
+  overflow: hidden;
+}
 
 mat-toolbar-row img {
  width: 80px;

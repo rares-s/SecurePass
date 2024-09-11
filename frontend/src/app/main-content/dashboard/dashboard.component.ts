@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 import { catchError, tap, throwError } from 'rxjs';
 import { LinkDetailDialogComponent } from '../../link-detail-dialog/link-detail.dialog.component';
 import { LinkDialogComponent } from '../../link-dialog/link-dialog.component';
-import tinycolor from 'tinycolor2';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
