@@ -32,28 +32,31 @@ export class LinkDialogComponent {
   public link: string = ''; 
   public label: string = '';
   public password: string= '';
+  public description: string = ''; // Beschreibung hinzufügen
   
  
   
   constructor(public dialogRef: MatDialogRef<LinkDialogComponent>) {}
 
-  public selectedColor: string = 'rgb(224 134 0)'; // Standardfarbe
+  public selectedColor: string = '#8800e0'; // Standardfarbe
 
 
   onSave(): void {
     if (this.link && this.label && this.password) {
-      this.dialogRef.close({ url: this.link, 
+      this.dialogRef.close({ 
+        url: this.link, 
         label: this.label, 
         password: this.password,
-        color: this.selectedColor // Farbe hinzufügen
+        color: this.selectedColor, 
+        description: this.description, 
       });
-      this.selectedColor = 'rgb(224 134 0)'; // Standardfarbe
+      this.selectedColor = '#8800e0'; 
     }
   }
 
   onCancel(): void {
     this.dialogRef.close(); // Dialog wird geschlossen
-    this.selectedColor = 'rgb(224 134 0)'; // Standardfarbe
+    this.selectedColor = '#8800e0'; // Standardfarbe
   }
 
 // Methode zum Generieren eines sicheren Passworts

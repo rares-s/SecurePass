@@ -104,6 +104,34 @@
   animation: pulse 0.5s ease-in-out;
 }
 
+/* Launch button styling */
+.launch-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: #f1f1f1; /* Einheitliche Hintergrundfarbe wie bei anderen Buttons */
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatten für besseren Kontrast */
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 0; /* Entferne zusätzliches Padding */
+}
+
+/* Icon Styling inside the launch button */
+.launch-button mat-icon {
+  font-size: 18px; /* Schriftgröße passend zu den anderen Icons */
+  color: #666; /* Gleiche Farbe wie bei anderen Icons */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Füllt den Button aus */
+  height: 100%; /* Füllt den Button aus */
+  line-height: 1; /* Stellt sicher, dass das Icon zentriert ist */
+}
+
+
 @keyframes pulse {
   0% {
     transform: scale(1);

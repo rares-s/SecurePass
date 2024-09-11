@@ -32,16 +32,20 @@ export class LinkDetailDialogComponent {
   link: string = ''; 
   label: string = '';
   password: string= '';
+  description: string;
 
   constructor(
     public dialogRef: MatDialogRef<LinkDetailDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { url: string; label: string; password: string; _id: string; websiteId: string },
+    @Inject(MAT_DIALOG_DATA) public data: {
+      description: string; url: string; label: string; password: string; _id: string; websiteId: string 
+},
     private snackBar: MatSnackBar,
     private http: HttpClient
   ) {
     this.link = data.url;
     this.label = data.label;
     this.password = data.password;
+    this.description = data.description || '';
   }
   
 
@@ -61,7 +65,15 @@ export class LinkDetailDialogComponent {
     this.data.password = generatedPassword;  // Setze das generierte Passwort in das Datenobjekt
   }
   
+  openWebsite(url: string): void {
+    // Überprüfe, ob die URL ein Protokoll enthält (http:// oder https://)
+    if (!/^https?:\/\//i.test(url)) {
+      url = 'https://' + url; // Füge 'https://' hinzu, wenn es fehlt
+    }
   
+    // Öffne die Webseite in einem neuen Tab
+    window.open(url, '_blank');
+  }
 
 
   onClose(): void {
@@ -76,7 +88,10 @@ export class LinkDetailDialogComponent {
     }
 
     const token = localStorage.getItem('token');  // Token für die Authentifizierung holen
-    const updatedData = { password: this.data.password };  // Nur das Passwort wird aktualisiert
+    const updatedData = { 
+      password: this.data.password,
+      description: this.data.description
+    }; 
     const url = `http://localhost:3000/api/links/${this.data._id}`;  // API-URL mit _id
 
     this.http.put(url, updatedData, {

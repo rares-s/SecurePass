@@ -37,13 +37,15 @@
   justify-content: center;
   align-items: center;
   height: 120px;
-  width: 150px;
+  width: 180px;
   text-align: center;
   font-size: 20px;
   margin-bottom: 24px;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  color: white;
 
    /* Button Delete */
 .button-delete {
@@ -83,54 +85,82 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-/* Hintergrundfarben für spezifische Karten */
-.youtube {
-  background: linear-gradient(135deg, #ff0000, #e03e2d);
-}
-
-.chatgpt, .blackboxai {
-  background: linear-gradient(135deg, #a5a5a5, #ffffff);
-}
-
-.yahoo {
-  background: linear-gradient(135deg, #520fa9, #b06ffb);
-}
-
-.outlook {
-  background: linear-gradient(135deg, #0078d7, #64a0ff);
-}
-
-.teams {
-  background: linear-gradient(135deg, #4c4bb5, #8b94b3);
-}
-
 /* Textfarbe */
 .text {
   color: #333;
 }
 
-.hinzufuegen {
+.search-bar-leiste {
+  display: flex;
+  justify-content: left;
   align-items: center;
+  padding: 18px;
+  margin-bottom: -28px;
+  gap: 24px;
+}
+
+.search-bar {
+  flex-grow: 1;
+  max-width: 300px;
+  padding: 8px 12px; /* added padding */
+}
+
+.reset-button {
+  width: 45px;
+  height: 45px;
+  margin: 0 12px; /* consistent spacing */
+  border-radius: 50%;
+  background-color: #007aff;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  margin-bottom: 16px;
+}
+
+.reset-button:hover {
+  background-color: rgba(200, 200, 200, 1);
+  transform: translateY(-1px); /* reduced hover effect */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.cardHinzufuegen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
   text-align: center;
-  background: #9d949469;
+  font-size: 20px;
+  margin-bottom: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: rgba(148, 157, 148, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  margin: 0 12px; /* consistent spacing */
+  margin-bottom: 16px;
 
 }
 
-.hinzufuegen:hover {
+.cardHinzufuegen:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-
-.search-container {
-  margin: 20px;
-  text-align: center;
+.plus {
+  color: #007aff;
+  font-size: 24px;
 }
 
-.search-container input {
-  width: 300px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
+.reset-icon {
+  color: #0069d9; /* slightly darker shade for reset icon */
 }
+
+
+
+

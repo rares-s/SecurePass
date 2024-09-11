@@ -4,35 +4,38 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { CommonModule } from '@angular/common'; // Importiere CommonModule für *ngFor, *ngIf usw.
-import { FormsModule } from '@angular/forms'; // Importiere FormsModule für ngModel
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common'; 
+import { FormsModule } from '@angular/forms'; 
 import { Router } from '@angular/router';
 import { catchError, tap, throwError } from 'rxjs';
 import { LinkDetailDialogComponent } from '../../link-detail-dialog/link-detail.dialog.component';
 import { LinkDialogComponent } from '../../link-dialog/link-dialog.component';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatToolbarModule, 
+  imports: [
+    MatToolbarModule, 
     MatIconModule, 
     MatCardModule, 
     MatDialogModule, 
+    MatFormFieldModule,  
+    MatInputModule,      
     CommonModule, 
-    FormsModule],
-
+    FormsModule
+  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
   title = 'SecurePass';
-  links: { _id: string, title: string, url: string, password: string, gradient: string }[] = [];
-  newLink: string = '';
-  newLabel: string = ''; // Neuer Label für den Link
-  showLinkInput: boolean = false;
+  links: { _id: string, title: string, url: string, password: string, gradient: string, description: string }[] = [];
+  filteredLinks: { _id: string, title: string, url: string, password: string, gradient: string, description: string }[] = [];
+  searchTerm: string = ''; 
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {
-    // this.checkAuthentication();  // Prüft, ob der Benutzer eingeloggt ist
-  }
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {}
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -41,22 +44,10 @@ export class DashboardComponent {
       this.router.navigate(['/login']);
     } else {
       console.log("Token found, loading links...");
-      this.loadLinks();  // Links laden, wenn eingeloggt
+      this.loadLinks(); 
     }
   }
 
-  // Überprüfe die Authentifizierung
-  checkAuthentication() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      console.log('Not logged in - redirecting to login');
-      this.router.navigate(['/login']);  // Umleiten zur Login-Seite
-    } else {
-      this.loadLinks();  // Links laden, wenn eingeloggt
-    }
-  }
-
-  // Lade Links vom Backend, inklusive Passwort
   loadLinks() {
     const token = localStorage.getItem('token');
     this.http.get<any[]>('http://localhost:3000/api/links', {
@@ -64,65 +55,104 @@ export class DashboardComponent {
     })
     .pipe(
       tap(data => {
-        console.log('Loaded links (websites):', data);  // Debug-Log
-        // Sicherstellen, dass auch das Passwort für jede Webseite geladen wird
         this.links = data.map(link => ({
           _id: link._id,
           title: link.title,
           url: link.url,
-          password: link.password || '',  // Falls das Passwort nicht vorhanden ist, setze es auf einen leeren String
-          gradient: link.gradient || ''
+          password: link.password || '',
+          gradient: link.gradient || '',
+          description: link.description || ''
         }));
+        this.filteredLinks = this.links; // Alle Links initial anzeigen
+      }),
+      catchError(this.handleError)
+    )
+    .subscribe();
+  }
+
+  onSearch(event: any) {
+    const searchTerm = event.target.value.trim().toUpperCase();
+
+    if (searchTerm) {
+      this.filteredLinks = this.links.filter(link => link.title.toUpperCase().includes(searchTerm));
+    } else {
+      this.filteredLinks = this.links; // Zeige alle Links an, wenn kein Suchbegriff eingegeben ist
+    }
+  }
+  
+
+  resetSearch() {
+    this.searchTerm = '';
+    this.filteredLinks = this.links; // Alle Links zurücksetzen
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(LinkDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.createNewCard(result.url, result.label, result.password, result.color, result.description);
+      }
+    });
+  }
+
+  createNewCard(title: string, url: string, password: string, gradient: string, description: any) {
+    const token = localStorage.getItem('token');
+  
+    // URL-Format prüfen und https:// hinzufügen, wenn es fehlt
+    if (!/^https?:\/\//i.test(title)) {
+      title = 'https://' + title;
+    }
+  
+    // Verwende entweder die Benutzerfarbe oder eine zufällige Farbe
+    const finalGradient = this.generateGradientWithUserColor(gradient);
+  
+    const newLink = { title: url, url: title, password, gradient: finalGradient, description };
+  
+    this.http.post('http://localhost:3000/api/links', newLink, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .pipe(
+      tap((data: any) => {
+        this.links.push({ ...data });
+        this.filteredLinks = this.links;
       }),
       catchError(this.handleError)
     )
     .subscribe();
   }
   
-
-
- // Öffne den Dialog
-openDialog(): void {
-  console.log('Opening dialog...');
-  const dialogRef = this.dialog.open(LinkDialogComponent);
-  // Generiere den zufälligen Farbverlauf
-  const gradient = this.generateRandomGradient();
-
-  dialogRef.afterClosed().subscribe((result: { url: string; label: string; password: string; color: string }) => {
-    if (result) {
-      console.log('Dialog result:', result);
-      this.createNewCard(result.url, result.label, result.password, result.color);
-    }
-  });
-}
-
-// Neue Kachel erstellen (mit Passwort und Farbverlauf)
-createNewCard(title: string, url: string, password: string, gradient: string) {
-  const token = localStorage.getItem('token');
-
-  // URL-Format prüfen und https:// hinzufügen, wenn es fehlt
-  if (!/^https?:\/\//i.test(title)) {
-    title = 'https://' + title;
-  }
+  // Funktion zur Erstellung eines Gradienten mit der Benutzerfarbe oder einer zufälligen Farbe
+generateGradientWithUserColor(userColor: string): string {
+  const colors = ['#FF5733', 
+    '#33FF57', 
+    '#3357FF', 
+    '#FF33A8', 
+    '#33FFF2', 
+    '#FF33FF', 
+    '#F3FF33', 
+    '#FF9A33', 
+    '#33FF8D', 
+    '#FF3333'
+  ];
   
-  const newLink = { title: url, url: title, password, gradient }; // Gradient als String hinzufügen
+  // Wähle eine zufällige Farbe aus dem Array als randomColor1
+  let randomColor1 = userColor || colors[Math.floor(Math.random() * colors.length)];
 
-  this.http.post('http://localhost:3000/api/links', newLink, {
-    headers: { Authorization: `Bearer ${token}` }
-  })
-  .pipe(
-    tap((data: any) => {
-      console.log('Created new link:', data);
-      this.links.push({ ...data}); // Gradient zum Link hinzufügen
-    }),
-    catchError(this.handleError)
-  )
-  .subscribe();
+
+  // Benutzerfarbe als randomColor2 oder wähle zufällig, wenn keine Benutzerfarbe angegeben ist
+  let randomColor2 = colors[Math.floor(Math.random() * colors.length)];
+
+  // Verhindere, dass die beiden Farben gleich sind, um bessere visuelle Kontraste zu erzeugen
+  while (randomColor2 === randomColor1) {
+    randomColor1 = colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  // Farbverlauf mit Benutzerfarbe (70% der Fläche) und zufälliger Farbe
+  return `linear-gradient(135deg, ${randomColor1}, ${randomColor2})`;
 }
 
+  
 
-
-  // Kachel löschen
   deleteCard(id: string) {
     const token = localStorage.getItem('token');
     const url = `http://localhost:3000/api/links/${id}`;
@@ -132,8 +162,8 @@ createNewCard(title: string, url: string, password: string, gradient: string) {
     })
     .pipe(
       tap(() => {
-        console.log(`Successfully deleted link with ID: ${id}`);
-        this.links = this.links.filter(link => link._id !== id);  // Entferne das gelöschte Element aus dem Array
+        this.links = this.links.filter(link => link._id !== id);
+        this.filteredLinks = this.links; // Update filteredLinks as well
       }),
       catchError(this.handleError)
     )
@@ -141,60 +171,28 @@ createNewCard(title: string, url: string, password: string, gradient: string) {
   }
 
   onLogout() {
-    localStorage.removeItem('token');  // Token aus dem Local Storage entfernen
-    this.router.navigate(['/login']);  // Weiterleitung zur Login-Seite
+    localStorage.removeItem('token');  
+    this.router.navigate(['/login']);
   }
-  
 
-// Fehlerbehandlung
-handleError = (error: HttpErrorResponse) => {
-  console.error('An error occurred:', error);
-  if (error.status === 401) {
-    console.error('Session expired or not authorized');
-    this.onLogout();  // Logge den Benutzer aus, wenn der Token abgelaufen ist
-    alert('Du wurdest ausgeloggt');  // Zeige eine Nachricht an
+  handleError = (error: HttpErrorResponse) => {
+    console.error('An error occurred:', error);
+    if (error.status === 401) {
+      this.onLogout();
+      alert('Du wurdest ausgeloggt'); 
+    }
+    return throwError(() => new Error('Something bad happened; please try again later.'));
   }
-  return throwError(() => new Error('Something bad happened; please try again later.'));
-}
 
-  // Neue Methode zum Öffnen des Detail-Dialogs
-  openDetailDialog(link: { _id: string; url: string; title: string; password: string }): void {
+  openDetailDialog(link: { _id: string; url: string; title: string; password: string, description: string }): void {
     const dialogRef = this.dialog.open(LinkDetailDialogComponent, {
-      data: { _id: link._id, url: link.url, label: link.title, password: link.password }
+      data: { _id: link._id, url: link.url, label: link.title, password: link.password, description: link.description }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log("Updated result: ", result); // Debug: Überprüfen, ob die aktualisierten Daten zurückkommen
-  
-        // Lade alle Links erneut aus der Datenbank, um sicherzustellen, dass die aktualisierten Daten angezeigt werden
         this.loadLinks();
       }
     });
   }
-  
-  
-  
-
-// Helper-Funktion, um einen zufälligen Farbverlauf zu generieren
-generateRandomGradient(): string {
-  const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#33FFF2', '#FF33FF', '#F3FF33', '#FF9A33', '#33FF8D', '#FF3333'];
-  // Wähle zwei verschiedene zufällige Farben aus dem Array
-  const randomColor1 = colors[Math.floor(Math.random() * colors.length)];
-  let randomColor2 = colors[Math.floor(Math.random() * colors.length)];
-
-  // Verhindere, dass die beiden Farben gleich sind
-  while (randomColor1 === randomColor2) {
-    randomColor2 = colors[Math.floor(Math.random() * colors.length)];
-  }
-
-  return `linear-gradient(135deg, ${randomColor1}, ${randomColor2})`;
 }
-
-
-
-
-
-}
-  
-

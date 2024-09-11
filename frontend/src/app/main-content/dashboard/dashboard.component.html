@@ -1,36 +1,39 @@
 <div class="page">
 
-    
+    <div class="search-bar-leiste">
+        <!-- Suchleiste -->
+        <mat-form-field appearance="outline" class="search-bar">
+          <mat-label><mat-icon class="search-icon">search</mat-icon> Suche</mat-label>
+          <input matInput (keydown.enter)="onSearch($event)" />
+        </mat-form-field>
+      
+        <!-- Zurücksetzen Icon -->
+        <button mat-icon-button class="reset-button" (click)="resetSearch()" matTooltip="Suche zurücksetzen">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      
+        <!-- Hinzufügen Button -->
+        <div class="mat-card-hinzufuegen">
+          <mat-card class="cardHinzufuegen" (click)="openDialog()">
+            <mat-icon class="plus">add_circle_outline</mat-icon>
+          </mat-card>
+        </div>
+      </div>
+
+      
+
     <div class="allCards" fxLayout="row wrap">
 
-        <div *ngFor="let x of links" class="mat-cards">
-            <!-- Klicke auf die gesamte Karte, um den Dialog zu öffnen -->
+        <div *ngFor="let x of filteredLinks" class="mat-cards">
             <mat-card (click)="openDetailDialog(x)" class="card" [ngStyle]="{'background': x.gradient}">
-              
-              <!-- Beim Klicken auf den Namen wird die URL in einem neuen Tab geöffnet -->
               <mat-card-title>
-                <a [href]="x.url" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()" style="text-decoration: none; color: white;">
-                  {{ x.title }}
-                </a>
+                {{ x.title }} 
               </mat-card-title>
-          
-              <!-- "X" Button zum Löschen der Karte -->
               <div class="button-delete" (click)="deleteCard(x._id); $event.stopPropagation()">
                 <mat-icon>close</mat-icon>
               </div>
             </mat-card>
           </div>
-          
-          
-          
-
-
-        <!-- Button zum Öffnen des Dialogs zum Hinzufügen neuer Kacheln -->
-        <div class="mat-cards">
-            <mat-card class="card hinzufuegen" (click)="openDialog()" style="text-align: center; cursor: pointer;">
-                <mat-icon class="plus">add_circle_outline</mat-icon>
-            </mat-card>
-        </div>
 
 
     </div>

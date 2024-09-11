@@ -83,7 +83,7 @@ router.put('/:websiteId', authMiddleware, async (req, res) => {
 
     // Aktualisiere das Passwort der spezifischen Website
     website.password = req.body.password || website.password;
-    
+    website.description = req.body.description !== undefined ? req.body.description : website.description; // Hier wird auch ein leerer String übernommen    
     // Speichere den Nutzer mit der aktualisierten Webseite
     await user.save();
     

@@ -37,7 +37,16 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> 
+  
+  <!-- Notizfeld -->
+  <mat-form-field appearance="outline" class="description-input">
+    <mat-label>Notiz</mat-label>
+    <textarea matInput [(ngModel)]="description" maxlength="80"></textarea>
+    <mat-hint align="end">{{description.length || 0}}/80</mat-hint>
+  </mat-form-field>
+
+
 
   <!-- Dialog Actions -->
   <div mat-dialog-actions class="buttonsCancelAndAdd">

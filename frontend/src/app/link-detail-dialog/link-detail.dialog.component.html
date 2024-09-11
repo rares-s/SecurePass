@@ -1,5 +1,13 @@
 <div class="form">
-  <h1 mat-dialog-title class="header">Webseitendetails - {{data.label}}</h1>
+  <div class="oben">
+  <h1 mat-dialog-title class="header">Webseitendetails - {{data.label}}
+  <div style="margin-top: 10px; float: right;">
+    <button mat-icon-button class="launch-button" (click)="openWebsite(data.url)" matTooltip="Zur Webseite">
+      <mat-icon>launch</mat-icon>
+    </button>
+  </div>
+</h1>
+</div>
   
   <div mat-dialog-content class="matdiv">
     <!-- URL Field (readonly) -->
@@ -41,8 +49,19 @@
 </div>
 
 
+<mat-form-field appearance="outline" class="description-input">
+  <mat-label>Notiz</mat-label>
+  <textarea matInput [(ngModel)]="data.description" maxlength="80"></textarea>
+  <mat-hint align="end">{{description.length || 0}}/80</mat-hint>
+</mat-form-field>
+
+
+
+
+
   <!-- Dialog Actions -->
   <div mat-dialog-actions class="buttonsCancelAndAdd">
+
     <!-- Schließen-Button -->
     <button mat-raised-button color="primary" (click)="onClose()">Schließen</button>
     
