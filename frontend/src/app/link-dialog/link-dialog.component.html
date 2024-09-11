@@ -1,8 +1,17 @@
 <div class="form">
   <h1 mat-dialog-title class="header">Detaileingabe</h1>
   <div mat-dialog-content class="matdiv">
+
+    <div class="farbenAuswahl" style="display: flex; align-items: center; flex-direction: row; padding-left: 0px;">
+      <mat-card style="display: flex; flex-direction: row;" appearance="outlined">
+        <mat-card-content>Farbe auswählen: </mat-card-content>
+        <color-chrome [(color)]="selectedColor" (onChange)="onColorChange($event.color.hex)"></color-chrome>
+      </mat-card>
+    </div>
+
     <!-- URL Field -->
-    <mat-form-field appearance="outline">
+     <div class="inputFields">
+    <mat-form-field appearance="outline" style="margin-right: 24px;">
       <mat-label>www.google.de</mat-label>
       <input matInput [(ngModel)]="link" class="placeholder">
     </mat-form-field>
@@ -12,6 +21,7 @@
       <mat-label>Name</mat-label>
       <input matInput [(ngModel)]="label" class="placeholderName">
     </mat-form-field>
+  </div>
 
     <!-- Password Field with Generate Button -->
     <div class="password-field">
@@ -30,7 +40,7 @@
   </div>
 
   <!-- Dialog Actions -->
-  <div mat-dialog-actions>
+  <div mat-dialog-actions class="buttonsCancelAndAdd">
     <button mat-raised-button color="primary" (click)="onCancel()">Abbrechen</button>
     <button mat-raised-button color="primary" (click)="onSave()">Hinzufügen</button>
   </div>

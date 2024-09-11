@@ -82,18 +82,17 @@ export class DashboardComponent {
   
 
 
-  // Öffne den Dialog
+ // Öffne den Dialog
 openDialog(): void {
   console.log('Opening dialog...');
   const dialogRef = this.dialog.open(LinkDialogComponent);
   // Generiere den zufälligen Farbverlauf
   const gradient = this.generateRandomGradient();
 
-  dialogRef.afterClosed().subscribe((result: { url: string; label: string; password: string; gradient: string }) => {
+  dialogRef.afterClosed().subscribe((result: { url: string; label: string; password: string; color: string }) => {
     if (result) {
-      result.gradient = gradient;
       console.log('Dialog result:', result);
-      this.createNewCard(result.url, result.label, result.password, result.gradient);
+      this.createNewCard(result.url, result.label, result.password, result.color);
     }
   });
 }

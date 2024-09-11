@@ -1,9 +1,6 @@
 <div class="page">
 
-
-
-
-
+    
     <div class="allCards" fxLayout="row wrap">
 
         <div class="mat-cards">
@@ -62,7 +59,7 @@
               
               <!-- Beim Klicken auf den Namen wird die URL in einem neuen Tab geöffnet -->
               <mat-card-title>
-                <a [href]="x.url" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()" style="text-decoration: none; color: inherit;">
+                <a [href]="x.url" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()" style="text-decoration: none; color: white;">
                   {{ x.title }}
                 </a>
               </mat-card-title>

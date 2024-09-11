@@ -20,14 +20,14 @@
 
 .password-input {
     flex-grow: 1;
-    margin-right: 8px;
+    margin-right: 24px;
 }
 
 /* Around the generate password button */
 .aroundgen {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: top;
     width: 40px;
     height: 40px;
     background-color: rgba(200, 200, 200, 0.8); /* Grau wie bei Apple */
@@ -35,6 +35,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     background-color: #f1f1f1;
+    margin-bottom: 24px;
 }
 
 /* Styling for the generate-password-button */
@@ -61,16 +62,15 @@
     align-items: center;
 }
 
-.matdiv {
-    padding: 4px !important;
-}
 
-.mat-dialog-actions {
+/* Container für die Buttons */
+.buttonsCancelAndAdd {
     display: flex;
-    justify-content: flex-end;
-    padding-top: 16px;
+    justify-content: space-between; /* Buttons links und rechts platzieren */
+    padding-top: 8px;
 }
 
+/* Button-Styling bleibt gleich */
 button {
     background-color: #007aff;
     color: white;
@@ -83,3 +83,40 @@ button {
 button:hover {
     background-color: #e0e0e0;
 }
+
+.matdiv {
+    padding: 4px !important;
+}
+
+::ng-deep .chrome-wrap {
+    padding-top: 16px;
+    display: none !important;
+    border-radius: 10px;
+  }
+  
+  ::ng-deep .saturation{
+      width: 100%;
+      padding-bottom: 55%;
+      position: relative;
+      border-radius: 2px 2px 0 0;
+      overflow: hidden;
+      display: none;
+  }
+  
+  ::ng-deep .chrome-picker{
+      box-shadow: none !important;
+      background: none !important;
+  }
+  
+  ::ng-deep .chrome-alpha{
+      display: none;
+  }
+  ::ng-deep .chrome-hue{
+      margin-top: 8px;
+  }
+
+  .farbenAuswahl{
+    width: 100%;
+    margin-bottom: 24px
+
+  }

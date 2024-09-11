@@ -16,36 +16,90 @@
   width: 100%;
 }
 
-.url-field, .name-field {
-  margin-bottom: 24px;
-}
-
 .password-field {
   display: flex;
   align-items: center;
   margin-bottom: 24px;
   justify-content: space-between;
+  width: 100%;
+
 }
 
 .password-input {
   flex-grow: 1;
-  margin-right: 8px;
+  margin-right: 24px;
 }
 
-.clipboard-button, .aroundgen {
+/* Around the generate password button */
+.aroundgen {
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(200, 200, 200, 0.8); /* Grau wie bei Apple */
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  background-color: #f1f1f1;
+  margin-bottom: 24px;
+}
+
+/* Styling for the generate-password-button */
+.generate-password-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px; /* Größere Breite des Buttons */
-  height: 40px; /* Größere Höhe des Buttons */
-  background-color: #f1f1f1;
+  width: 40px;
+  height: 40px;
+  background-color: #f1f1f1; /* Einheitliche Hintergrundfarbe für beide Buttons */
   border-radius: 50%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatten für besseren Kontrast */
+  cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Icon Styling inside the button */
+.generate-password-button mat-icon {
+  font-size: 20px;
+  color: #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Clipboard button styling */
+.clipboard-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: #f1f1f1; /* Einheitliche Hintergrundfarbe wie bei generate-password-button */
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatten für besseren Kontrast */
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 0; /* Entferne zusätzliches Padding */
+}
+
+/* Icon Styling inside the clipboard button */
+.clipboard-button mat-icon {
+  font-size: 18px; /* Reduziere die Schriftgröße, um das Icon sichtbar zu machen */
+  color: #666; /* Gleiche Farbe wie bei generate-password-button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Füllt den Button aus */
+  height: 100%; /* Füllt den Button aus */
+  line-height: 1; /* Stellt sicher, dass das Icon zentriert ist */
+}
+
+
+
+/* Clipboard button after copy animation */
 .clipboard-button.copied {
-  background-color: #007aff; /* Apple-like blue */
+  background-color: #007aff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   animation: pulse 0.5s ease-in-out;
 }
@@ -62,12 +116,13 @@
   }
 }
 
-.clipboard-button:hover, .aroundgen:hover {
+.clipboard-button:hover,
+.aroundgen:hover {
   background-color: #e0e0e0;
 }
 
 button mat-icon {
-  font-size: 20px; /* Etwas größere Schriftgröße für das Icon */
+  font-size: 20px;
   color: #666;
 }
 
@@ -77,6 +132,7 @@ button mat-icon {
   padding-top: 16px;
 }
 
+/* Button styling */
 button {
   background-color: #007aff;
   color: white;
@@ -88,4 +144,20 @@ button {
 
 button:hover {
   background-color: #e0e0e0;
+}
+
+.matdiv {
+  padding: 4px !important;
+}
+
+/* Container for cancel and add buttons */
+.buttonsCancelAndAdd {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+}
+
+.buttonsGenAndCopy{
+  display: flex;
+  flex-wrap: nowrap;
 }
