@@ -57,20 +57,24 @@
 
 
         <div *ngFor="let x of links" class="mat-cards">
+            <!-- Klicke auf die gesamte Karte, um den Dialog zu öffnen -->
             <mat-card (click)="openDetailDialog(x)" class="card" [ngStyle]="{'background': x.gradient}">
+              
+              <!-- Beim Klicken auf den Namen wird die URL in einem neuen Tab geöffnet -->
               <mat-card-title>
-                <a [href]="x.url" target="_blank" (click)="$event.stopPropagation()" style="text-decoration: none;">
-                  {{ x.title }} <!-- Öffnet die URL in einem neuen Tab, ohne das Dialog-Ereignis auszulösen -->
+                <a [href]="x.url" target="_blank" rel="noopener noreferrer" (click)="$event.stopPropagation()" style="text-decoration: none; color: inherit;">
+                  {{ x.title }}
                 </a>
               </mat-card-title>
-            </mat-card>
           
-            <div class="button-delete">
-              <button mat-icon-button (click)="deleteCard(x._id); $event.stopPropagation()"> <!-- Stoppt das Event, um den Dialog nicht zu öffnen -->
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
+              <!-- "X" Button zum Löschen der Karte -->
+              <div class="button-delete" (click)="deleteCard(x._id); $event.stopPropagation()">
+                <mat-icon>close</mat-icon>
+              </div>
+            </mat-card>
           </div>
+          
+          
           
 
 

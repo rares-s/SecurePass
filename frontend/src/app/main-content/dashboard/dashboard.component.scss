@@ -44,6 +44,37 @@
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+   /* Button Delete */
+.button-delete {
+  position: absolute;
+  top: -10px; /* Position weiter oben */
+  right: -10px; /* Position weiter rechts */
+  background-color: rgba(200, 200, 200, 0.8); /* Dezentes Apple-like Grau */
+  border-radius: 50%; /* Runde Form */
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  opacity: 0; /* Unsichtbar, bis man über die Kachel hovert */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Sanfte Einblendung und Hover-Effekt */
+  cursor: pointer;
+}
+
+&:hover .button-delete {
+  opacity: 1; /* Sichtbar, wenn man über die Kachel hovert */
+  transform: scale(1.1); /* Leichtes Vergrößern bei Hover */
+}
+
+/* Icon Styling */
+.button-delete mat-icon {
+  font-size: 16px; /* Kleinere Schriftgröße für das X */
+  color: #666; /* Graues X, passend zum Apple-Look */
+  display: flex; /* Add this to center the icon */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
 }
 
 /* Hover-Effekte */
@@ -88,27 +119,4 @@
 .hinzufuegen:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-
-/* Delete Button */
-.button-delete {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: -12px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  width: 40%;
-  height: 32px;
-  margin-left: auto;
-  margin-right: auto;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.button-delete:hover {
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  transform: translateY(-5px);
 }

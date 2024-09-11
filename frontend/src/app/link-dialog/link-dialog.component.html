@@ -1,19 +1,37 @@
-
 <div class="form">
-    <h1 mat-dialog-title class="header">Gib eine URL ein</h1>
-    <div mat-dialog-content>
-      <mat-form-field>
-        <input matInput placeholder="Example: www.google.de" [(ngModel)]="link" class="placeholder">
+  <h1 mat-dialog-title class="header">Detaileingabe</h1>
+  <div mat-dialog-content class="matdiv">
+    <!-- URL Field -->
+    <mat-form-field appearance="outline">
+      <mat-label>www.google.de</mat-label>
+      <input matInput [(ngModel)]="link" class="placeholder">
+    </mat-form-field>
+
+    <!-- Name Field -->
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="label" class="placeholderName">
+    </mat-form-field>
+
+    <!-- Password Field with Generate Button -->
+    <div class="password-field">
+      <mat-form-field appearance="outline" class="password-input">
+        <mat-label>Password</mat-label>
+        <input matInput [(ngModel)]="password" class="placeholderPassword">
       </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Name" [(ngModel)]="label" class="placeholderName">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Password" [(ngModel)]="password" class="placeholderName">
-      </mat-form-field>
-    </div>
-    <div mat-dialog-actions>
-      <button mat-button (click)="onCancel()">Abbrechen</button>
-      <button mat-button (click)="onSave()">Hinzufügen</button>
+  
+      <!-- Generate Password Button -->
+      <div class="aroundgen">
+        <button mat-icon-button class="generate-password-button" (click)="generatePassword()">
+          <mat-icon>autorenew</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
+
+  <!-- Dialog Actions -->
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="onCancel()">Abbrechen</button>
+    <button mat-raised-button color="primary" (click)="onSave()">Hinzufügen</button>
+  </div>
+</div>

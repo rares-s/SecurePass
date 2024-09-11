@@ -1,17 +1,47 @@
 <div class="form">
-    <h1 mat-dialog-title class="header">Webseite Details</h1>
-    <div mat-dialog-content>
-        <mat-form-field>
-            <input matInput [value]="data.url" placeholder="URL" class="placeholder" readonly>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [value]="data.label" placeholder="Name" class="placeholderName" readonly>
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput [value]="data.password" placeholder="Password" class="placeholderName" readonly>
-        </mat-form-field>
+  <h1 mat-dialog-title class="header">Webseitendetails - {{data.label}}</h1>
+  
+  <div mat-dialog-content>
+    <!-- URL Field (readonly) -->
+    <mat-form-field appearance="outline">
+      <mat-label>URL</mat-label>
+      <input matInput [value]="stripProtocol(data.url)" readonly>
+    </mat-form-field>
+
+    <!-- Name Field (readonly) -->
+    <mat-form-field appearance="outline">
+      <mat-label>Name der Kachel</mat-label>
+      <input matInput [value]="data.label" readonly>
+    </mat-form-field>
+  </div>
+
+  <!-- Password Field with Copy Button and Generate Button -->
+  <div class="password-field">
+    <mat-form-field appearance="outline" class="password-input">
+      <mat-label>Password</mat-label>
+      <!-- Passwort ist jetzt editierbar -->
+      <input matInput [(ngModel)]="data.password" class="placeholderPassword">
+    </mat-form-field>
+
+    <!-- Copy to Clipboard Button -->
+    <button mat-icon-button class="clipboard-button" (click)="copyToClipboard(data.password)" matTooltip="Copy Password">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+
+    <!-- Generate Password Button -->
+    <div class="aroundgen">
+      <button mat-icon-button class="generate-password-button" (click)="generatePassword()">
+        <mat-icon>autorenew</mat-icon>
+      </button>
     </div>
-    <div mat-dialog-actions>
-        <button mat-button (click)="onClose()">Schließen</button>
-    </div>
+  </div>
+
+  <!-- Dialog Actions -->
+  <div mat-dialog-actions>
+    <!-- Schließen-Button -->
+    <button mat-raised-button color="primary" (click)="onClose()">Schließen</button>
+    
+    <!-- Speichern-Button -->
+    <button mat-raised-button color="primary" (click)="onSave()">Speichern</button>
+  </div>
 </div>

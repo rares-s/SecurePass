@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { catchError, tap, throwError } from 'rxjs';
 import { LinkDetailDialogComponent } from '../../link-detail-dialog/link-detail.dialog.component';
 import { LinkDialogComponent } from '../../link-dialog/link-dialog.component';
-
+import tinycolor from 'tinycolor2';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -101,6 +101,11 @@ openDialog(): void {
 // Neue Kachel erstellen (mit Passwort und Farbverlauf)
 createNewCard(title: string, url: string, password: string, gradient: string) {
   const token = localStorage.getItem('token');
+
+  // URL-Format prüfen und https:// hinzufügen, wenn es fehlt
+  if (!/^https?:\/\//i.test(title)) {
+    title = 'https://' + title;
+  }
   
   const newLink = { title: url, url: title, password, gradient }; // Gradient als String hinzufügen
 
@@ -155,20 +160,41 @@ handleError = (error: HttpErrorResponse) => {
 }
 
   // Neue Methode zum Öffnen des Detail-Dialogs
-openDetailDialog(link: { url: string; title: string; password: string }): void {
-  console.log('Opening detail dialog for:', link);
-  this.dialog.open(LinkDetailDialogComponent, {
-    data: { url: link.url, label: link.title, password: link.password }
-  });
-}
+  openDetailDialog(link: { _id: string; url: string; title: string; password: string }): void {
+    const dialogRef = this.dialog.open(LinkDetailDialogComponent, {
+      data: { _id: link._id, url: link.url, label: link.title, password: link.password }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log("Updated result: ", result); // Debug: Überprüfen, ob die aktualisierten Daten zurückkommen
+  
+        // Lade alle Links erneut aus der Datenbank, um sicherzustellen, dass die aktualisierten Daten angezeigt werden
+        this.loadLinks();
+      }
+    });
+  }
+  
+  
+  
 
 // Helper-Funktion, um einen zufälligen Farbverlauf zu generieren
 generateRandomGradient(): string {
   const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#33FFF2', '#FF33FF', '#F3FF33', '#FF9A33', '#33FF8D', '#FF3333'];
+  // Wähle zwei verschiedene zufällige Farben aus dem Array
   const randomColor1 = colors[Math.floor(Math.random() * colors.length)];
-  const randomColor2 = colors[Math.floor(Math.random() * colors.length)];
+  let randomColor2 = colors[Math.floor(Math.random() * colors.length)];
+
+  // Verhindere, dass die beiden Farben gleich sind
+  while (randomColor1 === randomColor2) {
+    randomColor2 = colors[Math.floor(Math.random() * colors.length)];
+  }
+
   return `linear-gradient(135deg, ${randomColor1}, ${randomColor2})`;
 }
+
+
+
 
 
 }

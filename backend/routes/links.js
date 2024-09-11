@@ -65,4 +65,35 @@ router.delete('/:websiteId', authMiddleware, async (req, res) => {
   }
 });
 
+
+
+// Route für das Update einer spezifischen Website
+router.put('/:websiteId', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id); // Verwende die Nutzer-ID
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Finde die spezifische Website anhand der Website-ID
+    const website = user.websites.id(req.params.websiteId);
+    if (!website) {
+      return res.status(404).json({ message: 'Website not found' });
+    }
+
+    // Aktualisiere das Passwort der spezifischen Website
+    website.password = req.body.password || website.password;
+    
+    // Speichere den Nutzer mit der aktualisierten Webseite
+    await user.save();
+    
+    res.json(website);  // Rückgabe der aktualisierten Webseite
+  } catch (error) {
+    console.error('Server error while updating website password:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
 module.exports = router;

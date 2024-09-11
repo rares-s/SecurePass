@@ -1,22 +1,91 @@
 .form {
   display: flex;
   flex-direction: column;
+  padding: 24px;
 }
 
 .header {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: bold;
+  margin-bottom: 24px;
+  color: #333;
 }
 
 .mat-form-field {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.url-field, .name-field {
+  margin-bottom: 24px;
+}
+
+.password-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  justify-content: space-between;
+}
+
+.password-input {
+  flex-grow: 1;
+  margin-right: 8px;
+}
+
+.clipboard-button, .aroundgen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px; /* Größere Breite des Buttons */
+  height: 40px; /* Größere Höhe des Buttons */
+  background-color: #f1f1f1;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatten für besseren Kontrast */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.clipboard-button.copied {
+  background-color: #007aff; /* Apple-like blue */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.clipboard-button:hover, .aroundgen:hover {
+  background-color: #e0e0e0;
+}
+
+button mat-icon {
+  font-size: 20px; /* Etwas größere Schriftgröße für das Icon */
+  color: #666;
 }
 
 .mat-dialog-actions {
   display: flex;
   justify-content: flex-end;
+  padding-top: 16px;
 }
 
 button {
-  margin-right: 8px;
+  background-color: #007aff;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #e0e0e0;
 }
