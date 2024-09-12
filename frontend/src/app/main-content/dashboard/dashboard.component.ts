@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -12,6 +12,10 @@ import { Router } from '@angular/router';
 import { catchError, tap, throwError } from 'rxjs';
 import { LinkDetailDialogComponent } from '../../link-detail-dialog/link-detail.dialog.component';
 import { LinkDialogComponent } from '../../link-dialog/link-dialog.component';
+import { MatSelectModule } from '@angular/material/select';  // Importiere MatSelectModule
+import { SimpleChanges } from '@angular/core';
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -24,18 +28,27 @@ import { LinkDialogComponent } from '../../link-dialog/link-dialog.component';
     MatFormFieldModule,  
     MatInputModule,      
     CommonModule, 
-    FormsModule
+    FormsModule,
+    MatSelectModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
   title = 'SecurePass';
-  links: { _id: string, title: string, url: string, password: string, gradient: string, description: string }[] = [];
-  filteredLinks: { _id: string, title: string, url: string, password: string, gradient: string, description: string }[] = [];
+  links: { _id: string, title: string, url: string, password: string, gradient: string, description: string, username: string, category: string }[] = [];
+  filteredLinks: { _id: string, title: string, url: string, password: string, gradient: string, description: string, username: string, category: string }[] = [];
   searchTerm: string = ''; 
+  categories: string[] = ['Arbeit', 'SocialMedia', 'Privat', 'Sonstiges'];
+  selectedCategory: string = 'Alle';  // Einzelne ausgewählte Kategorie
+  
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {}
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {
+    this.category = '';
+  }
+  
+
+  @Input() category: string = '';  // Empfängt die ausgewählte Kategorie
 
   ngOnInit() {
     const token = localStorage.getItem('token');
@@ -45,6 +58,19 @@ export class DashboardComponent {
     } else {
       console.log("Token found, loading links...");
       this.loadLinks(); 
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['category']) {
+      this.filterLinksByCategory(this.category);
+    }
+  }
+  filterLinksByCategory(category: string) {
+    if (category === 'Alle') {
+      this.filteredLinks = this.links;
+    } else {
+      this.filteredLinks = this.links.filter(link => link.category === category);
     }
   }
 
@@ -61,7 +87,9 @@ export class DashboardComponent {
           url: link.url,
           password: link.password || '',
           gradient: link.gradient || '',
-          description: link.description || ''
+          description: link.description || '',
+          username: link.username || '',
+          category: link.category || ''
         }));
         this.filteredLinks = this.links; // Alle Links initial anzeigen
       }),
@@ -69,6 +97,16 @@ export class DashboardComponent {
     )
     .subscribe();
   }
+
+  onCategorySelect(category: string): void {
+    this.selectedCategory = category;  // Kategorie als Zeichenkette speichern
+    if (category === 'Alle') {
+      this.filteredLinks = this.links;
+    } else {
+      this.filteredLinks = this.links.filter(link => link.category === category);
+    }
+}
+
 
   onSearch(event: any) {
     const searchTerm = event.target.value.trim().toUpperCase();
@@ -90,12 +128,20 @@ export class DashboardComponent {
     const dialogRef = this.dialog.open(LinkDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.createNewCard(result.url, result.label, result.password, result.color, result.description);
+        this.createNewCard(
+          result.url, 
+          result.label, 
+          result.password, 
+          result.color, 
+          result.description,
+          result.username,
+          result.category
+        );
       }
     });
   }
 
-  createNewCard(title: string, url: string, password: string, gradient: string, description: any) {
+  createNewCard(title: string, url: string, password: string, gradient: string, description: any, username: string, category: string = 'Sonstiges') {
     const token = localStorage.getItem('token');
   
     // URL-Format prüfen und https:// hinzufügen, wenn es fehlt
@@ -106,7 +152,7 @@ export class DashboardComponent {
     // Verwende entweder die Benutzerfarbe oder eine zufällige Farbe
     const finalGradient = this.generateGradientWithUserColor(gradient);
   
-    const newLink = { title: url, url: title, password, gradient: finalGradient, description };
+    const newLink = { title: url, url: title, password, gradient: finalGradient, description, username, category };
   
     this.http.post('http://localhost:3000/api/links', newLink, {
       headers: { Authorization: `Bearer ${token}` }
@@ -172,6 +218,7 @@ generateGradientWithUserColor(userColor: string): string {
 
   onLogout() {
     localStorage.removeItem('token');  
+    localStorage.removeItem('userEmail');
     this.router.navigate(['/login']);
   }
 
@@ -184,9 +231,9 @@ generateGradientWithUserColor(userColor: string): string {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
-  openDetailDialog(link: { _id: string; url: string; title: string; password: string, description: string }): void {
+  openDetailDialog(link: { _id: string; url: string; title: string; password: string, description: string, username: string, category: string }): void {
     const dialogRef = this.dialog.open(LinkDetailDialogComponent, {
-      data: { _id: link._id, url: link.url, label: link.title, password: link.password, description: link.description }
+      data: { _id: link._id, url: link.url, label: link.title, password: link.password, description: link.description, username: link.username, category: link.category }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -194,5 +241,20 @@ generateGradientWithUserColor(userColor: string): string {
         this.loadLinks();
       }
     });
+  }
+
+  getCategoryIcon(category: string): string {
+    switch (category) {
+      case 'Arbeit':
+        return 'work'; // Icon für Arbeit
+      case 'SocialMedia':
+        return 'group'; // Icon für Social Media
+      case 'Privat':
+        return 'lock'; // Icon für Privat
+      case 'Sonstiges':
+        return 'category'; // Icon für Sonstiges
+      default:
+        return 'category'; // Standard Icon
+    }
   }
 }

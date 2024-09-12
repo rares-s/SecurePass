@@ -2,10 +2,10 @@
   <h1 mat-dialog-title class="header">Detaileingabe</h1>
   <div mat-dialog-content class="matdiv">
 
-    <div class="farbenAuswahl" style="display: flex; align-items: center; flex-direction: row; padding-left: 0px;">
+    <div class="farbenAuswahl" style="display: flex; align-items: center; flex-direction: row; padding-left: 0px; cursor: default;">
       <mat-card style="display: flex; flex-direction: row; width: 450px" appearance="outlined">
-        <mat-card-content>Farbe auswählen: </mat-card-content>
-        <color-chrome [(color)]="selectedColor" (onChange)="onColorChange($event.color.hex)" style="margin-left: 24px;"></color-chrome>
+        <mat-card-content>Farbenauswahl: </mat-card-content>
+        <color-chrome [(color)]="selectedColor" (onChange)="onColorChange($event.color.hex)" style="margin-left: 24px; cursor: pointer;"></color-chrome>
       </mat-card>
     </div>
 
@@ -23,6 +23,14 @@
     </mat-form-field>
   </div>
 
+   <!-- Password Field with Generate Button -->
+   <div class="username-field" style="width: 180px;">
+    <mat-form-field appearance="outline" class="password-input">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="username" class="placeholderPassword">
+    </mat-form-field>
+    </div>
+
     <!-- Password Field with Generate Button -->
     <div class="password-field">
       <mat-form-field appearance="outline" class="password-input">
@@ -38,6 +46,15 @@
       </div>
     </div>
   </div> 
+
+  <mat-form-field appearance="fill">
+    <mat-label>Kategorie</mat-label>
+    <mat-select [(ngModel)]="category">
+      <mat-option *ngFor="let category of categories" [value]="category">
+        {{category}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   
   <!-- Notizfeld -->
   <mat-form-field appearance="outline" class="description-input">

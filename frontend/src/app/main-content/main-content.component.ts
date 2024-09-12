@@ -1,12 +1,15 @@
 import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
-import {Component} from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDrawerContainer, MatSidenavModule} from '@angular/material/sidenav';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDrawerContainer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatListModule} from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { CommonModule } from '@angular/common';  // <-- Add CommonModule for *ngFor
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 export interface Section {
   name: string;
@@ -21,7 +24,12 @@ export interface Section {
     MatButtonModule, 
     MatDrawerContainer,
     MatDividerModule,
-    MatListModule], // Alle Importe aus beiden Komponenten
+    MatListModule,
+    CommonModule,
+    DashboardComponent
+
+  ], // Alle Importe aus beiden Komponenten
+
   templateUrl: './main-content.component.html', // Wähle ein Template oder kombiniere sie
   styleUrls: ['./main-content.component.scss',] // Beide CSS-Dateien zusammengeführt
 })
@@ -31,7 +39,11 @@ export class MainContentComponent{
 
   folders: Section[] = [
     {
-      name: 'Arbeit',    },
+      name: 'Alle',    
+    },
+    {
+      name: 'Arbeit',    
+    },
     {
       name: 'SocialMedia',
     },
@@ -44,6 +56,9 @@ export class MainContentComponent{
 
   ];
 
+  selectedCategory: string = 'Alle';  // Standardmäßig ist "Alle" ausgewählt
+
+
 
   constructor(private router: Router) {}
 
@@ -51,6 +66,7 @@ export class MainContentComponent{
     this.router.navigate(['/home/dashboard']);
   }
   routeProfil() {
+    console.log('Profil wird aufgerufen');  // Debugging
     this.router.navigate(['/home/profil']);
   }
 
@@ -58,6 +74,30 @@ export class MainContentComponent{
     localStorage.removeItem('token');  // Token aus dem Local Storage entfernen
     this.router.navigate(['/login']);  // Weiterleitung zur Login-Seite
   }
+
+  selectCategory(category: string) {
+    this.selectedCategory = category;  // Setzt die ausgewählte Kategorie
+  }
+
+// Methode zum Abrufen des passenden Icons
+getCategoryIcon(category: string): string {
+  switch (category) {
+    case 'Arbeit':
+      return 'work';
+    case 'SocialMedia':
+      return 'group';
+    case 'Privat':
+      return 'lock';
+    case 'Sonstiges':
+      return 'category';
+      case 'Alle':
+        return 'apps';  // Hier das Icon ändern, z.B. 'list', 'apps', 'view_list'
+    default:
+      return 'folder';  // Standard-Icon, falls nichts passt
+  }
+}
+
+
 
 
 }

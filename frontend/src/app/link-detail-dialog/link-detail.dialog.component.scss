@@ -189,3 +189,7 @@ button:hover {
   display: flex;
   flex-wrap: nowrap;
 }
+
+.username-field mat-form-field {
+  width: 338px;
+}

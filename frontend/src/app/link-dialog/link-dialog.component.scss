@@ -23,6 +23,10 @@
     margin-right: 24px;
 }
 
+.username-field mat-form-field {
+    width: 386px;
+}
+
 /* Around the generate password button */
 .aroundgen {
     display: flex;

@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon'; // MatIconModule importi
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
 import { HttpClient, HttpClientModule } from '@angular/common/http'; // HttpClient importieren
+import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -23,7 +25,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http'; // HttpClie
     MatSnackBarModule, // MatSnackBarModule hinzufügen
     FormsModule,
     MatCardModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSelectModule,
+    CommonModule
   ]
 })
 export class LinkDetailDialogComponent {
@@ -33,11 +37,21 @@ export class LinkDetailDialogComponent {
   label: string = '';
   password: string= '';
   description: string;
+  username: string;
+  category: string = '';
+
+  categories: string[] = ['Arbeit', 'SocialMedia', 'Privat', 'Sonstiges'];
+
+  isPasswordVisible = false;  // Steuert die Sichtbarkeit des Passworts
+
+  togglePasswordVisibility(show: boolean) {
+    this.isPasswordVisible = show;
+  }
 
   constructor(
     public dialogRef: MatDialogRef<LinkDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {
-      description: string; url: string; label: string; password: string; _id: string; websiteId: string 
+      description: string; url: string; label: string; password: string; _id: string; websiteId: string; username: string; category: string
 },
     private snackBar: MatSnackBar,
     private http: HttpClient
@@ -46,6 +60,9 @@ export class LinkDetailDialogComponent {
     this.label = data.label;
     this.password = data.password;
     this.description = data.description || '';
+    this.username = data.username || '';
+    this.category = data.category || ''; // Set the category value here
+
   }
   
 
@@ -90,7 +107,9 @@ export class LinkDetailDialogComponent {
     const token = localStorage.getItem('token');  // Token für die Authentifizierung holen
     const updatedData = { 
       password: this.data.password,
-      description: this.data.description
+      description: this.data.description,
+      username: this.data.username,
+      category: this.data.category
     }; 
     const url = `http://localhost:3000/api/links/${this.data._id}`;  // API-URL mit _id
 

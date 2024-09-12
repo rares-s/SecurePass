@@ -47,6 +47,14 @@
   cursor: pointer;
   color: white;
 
+/* Optional: Bei Hover einen subtilen Effekt */
+&:hover {
+  color: #8fc5ff; /* Apple-ähnliches Blau für Hover-Effekt */
+  mat-icon {
+    color: #8fc5ff;
+  }
+}
+
    /* Button Delete */
 .button-delete {
   position: absolute;
@@ -161,6 +169,34 @@
   color: #0069d9; /* slightly darker shade for reset icon */
 }
 
+.category {
+  font-size: 12px;
+  color: #8fc5ff; /* Dezentes Apple-ähnliches Grau */
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  align-items: center; /* Vertikale Zentrierung von Icon und Text */
+  font-weight: 500; /* Leichte Fettschrift für besseren Kontrast */
+  
+
+  /* Style für das Icon */
+  mat-icon {
+    font-size: 12px; /* Etwas größer, damit es auf Augenhöhe mit dem Text ist */
+    margin-right: 6px; /* Abstand zwischen Icon und Text */
+    color: #a1a1a6; /* Etwas helleres Grau für das Icon */
+    vertical-align: middle; /* Ausrichtung mit dem Text */
+    margin-top: 8px;
+  }
+
+  /* Optional: Bei Hover einen subtilen Effekt */
+  &:hover {
+    color: #8fc5ff; /* Apple-ähnliches Blau für Hover-Effekt */
+    mat-icon {
+      color: #8fc5ff;
+    }
+  }
+}
 
 
 

@@ -1,4 +1,5 @@
 <div class="page">
+  
 
     <div class="search-bar-leiste">
         <!-- Suchleiste -->
@@ -19,24 +20,41 @@
           </mat-card>
         </div>
       </div>
-
-      
-
-    <div class="allCards" fxLayout="row wrap">
-
-        <div *ngFor="let x of filteredLinks" class="mat-cards">
-            <mat-card (click)="openDetailDialog(x)" class="card" [ngStyle]="{'background': x.gradient}">
-              <mat-card-title>
-                {{ x.title }} 
-              </mat-card-title>
-              <div class="button-delete" (click)="deleteCard(x._id); $event.stopPropagation()">
-                <mat-icon>close</mat-icon>
-              </div>
-            </mat-card>
-          </div>
+<!--
+      <div style="margin-left: 30px;">
+        <mat-form-field appearance="fill">
+          <mat-label>Kategorie</mat-label>
+          <mat-select [(value)]="selectedCategory" (selectionChange)="onCategorySelect($event.value)">
+            <mat-option value="Alle">Alle</mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{category}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+-->
 
 
-    </div>
+<div class="allCards" fxLayout="row wrap">
+  <div *ngFor="let x of filteredLinks" class="mat-cards">
+    <mat-card (click)="openDetailDialog(x)" class="card" [ngStyle]="{'background': x.gradient}">
+      <mat-card-title>
+        {{ x.title }}
+      </mat-card-title>
+
+      <!-- Kategorie Icon und Name -->
+      <div class="category">
+        <mat-icon>{{ getCategoryIcon(x.category) }}</mat-icon> {{ x.category }}
+      </div>
+
+      <!-- Löschen-Button -->
+      <div class="button-delete" (click)="deleteCard(x._id); $event.stopPropagation()">
+        <mat-icon>close</mat-icon>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
 
 
 

@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSnackBar
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, MatInputModule, MatButtonModule],
+  imports: [FormsModule, MatInputModule, MatButtonModule, MatSnackBarModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -16,16 +18,20 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient, 
+    private router: Router, 
+    private snackBar: MatSnackBar // Inject MatSnackBar service
+  ) {}
 
   onSubmit() {
     if (!this.email || !this.password) {
-      console.error('Bitte geben Sie Benutzername und Passwort ein');
+      this.showSnackbar('Bitte geben Sie Benutzername und Passwort ein');
       return;
     }
   
     if (!this.validateEmail(this.email)) {
-      console.error('Bitte geben Sie eine korrekte E-Mail-Adresse ein');
+      this.showSnackbar('Bitte geben Sie eine korrekte E-Mail-Adresse ein');
       return;
     }
   
@@ -40,21 +46,27 @@ export class LoginComponent {
         this.router.navigate(['/home/dashboard']);  // Weiterleitung zum Dashboard
       },
       error: (error) => {
+        this.showSnackbar('Email oder Passwort falsch'); // Show error message when login fails
         console.error('Login failed', error);
       }
     });
   }
-  
+
   validateEmail(email: string) {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   }
   
-  
-  // Methode zum direkten Zugriff auf das Dashboard ohne Login
-  skipLogin() {
-    this.router.navigate(['/home/dashboard']);  
+  // Method to display the snackbar with a custom message
+  showSnackbar(message: string) {
+    this.snackBar.open(message, 'OK', {
+      duration: 3000, // Duration in milliseconds
+      verticalPosition: 'top', // Position: 'top' or 'bottom'
+      horizontalPosition: 'center' // Position: 'start', 'center', or 'end'
+    });
   }
+
+  
   // Methode zum direkten Zugriff auf das Dashboard ohne Login
   routeRegistrieren() {
     this.router.navigate(['/register']);

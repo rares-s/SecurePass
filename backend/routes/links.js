@@ -20,10 +20,10 @@ router.get('/', authMiddleware, async (req, res) => {
 
 // Neue Kachel erstellen
 router.post('/', authMiddleware, async (req, res) => {
-  const { title, url, password, gradient, description } = req.body;
+  const { title, url, password, gradient, description, username, category } = req.body;
 
   // Füge eine Validierung der Anfrage hinzu
-  if (!title || !url || !password) {
+  if (!title || !url || !password || !category) {
     return res.status(400).json({ message: 'Title and URL are required' });
   }
 
@@ -35,7 +35,7 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const newWebsite = { title, url, password, gradient, description }; // Verwende "websites" statt "tiles"
+    const newWebsite = { title, url, password, gradient, description, username, category }; // Verwende "websites" statt "tiles"
     user.websites.push(newWebsite);  // Füge die neue Webseite zu "websites" hinzu
     await user.save();
     res.status(201).json(newWebsite);  // Gib die neu erstellte Webseite zurück
@@ -83,7 +83,9 @@ router.put('/:websiteId', authMiddleware, async (req, res) => {
 
     // Aktualisiere das Passwort der spezifischen Website
     website.password = req.body.password || website.password;
-    website.description = req.body.description !== undefined ? req.body.description : website.description; // Hier wird auch ein leerer String übernommen    
+    website.username = req.body.username !== undefined ? req.body.username : website.username; // Hier wird auch ein leerer String übernommen    
+    website.description = req.body.description !== undefined ? req.body.description : website.description; // Hier wird auch ein leerer String übernommen  
+    website.category = req.body.category !== undefined ? req.body.category : website.category;
     // Speichere den Nutzer mit der aktualisierten Webseite
     await user.save();
     

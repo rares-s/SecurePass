@@ -6,9 +6,11 @@ const bcrypt = require('bcryptjs');
 const WebsiteDataSchema = new Schema({
   title: { type: String, required: true },  // Name der Webseite
   url: { type: String, required: true },    // URL der Webseite
+  username: { type: String, required: false},
   password: { type: String, required: false },
   gradient: { type: String, required: false },
   description: { type: String, required: false },  // Gespeichertes Passwort für die Webseite
+  category: { type: String, required: true, default: 'Sonstiges'},  // Kategorie
   timestamp: { type: Date, default: Date.now } // Zeitstempel der Erstellung
 });
 

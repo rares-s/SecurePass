@@ -9,6 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { ColorChromeModule } from 'ngx-color/chrome'; // Beispiel: Chrome Picker
 import { MatDividerModule } from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select'; // Import MatSelectModule
+import { CommonModule } from '@angular/common';  // Import CommonModule
+
+
 
 
 @Component({
@@ -23,7 +27,9 @@ import {MatCardModule} from '@angular/material/card';
     MatIconModule,
     ColorChromeModule,
     MatCardModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSelectModule,
+    CommonModule
   ],
   templateUrl: './link-dialog.component.html',
   styleUrls: ['./link-dialog.component.scss']
@@ -33,6 +39,9 @@ export class LinkDialogComponent {
   public label: string = '';
   public password: string= '';
   public description: string = ''; // Beschreibung hinzufügen
+  public username: string = ''; // Username hinzufügen
+  public categories: string[] = ['Arbeit', 'SocialMedia', 'Privat', 'Sonstiges'];  // Add this array for categories
+  public category: string = '';  // Add a binding for the selected category
   
  
   
@@ -48,7 +57,9 @@ export class LinkDialogComponent {
         label: this.label, 
         password: this.password,
         color: this.selectedColor, 
-        description: this.description, 
+        description: this.description,
+        username: this.username,
+        category: this.category // Speichere die Kategorie
       });
       this.selectedColor = '#8800e0'; 
     }
