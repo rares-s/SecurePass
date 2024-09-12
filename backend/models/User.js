@@ -16,6 +16,7 @@ const WebsiteDataSchema = new Schema({
 
 // Schema für den Benutzer
 const UserSchema = new Schema({
+  username: { type: String, required: true }, //Username
   email: { type: String, required: true, unique: true }, // E-Mail für Login
   password: { type: String, required: true }, // Passwort für Login
   websites: [WebsiteDataSchema] // Array von Webseiten-Daten

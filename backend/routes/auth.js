@@ -8,7 +8,7 @@ const jwtSecret = 'deinGeheimesToken';
 
 // Registrierung eines neuen Benutzers (keine authMiddleware hier)
 router.post('/register', async (req, res) => {
-    const { email, password } = req.body; // Benutzer-Eingaben
+    const { email, password, username } = req.body; // Benutzer-Eingaben
 
     try {
       // Prüfe, ob der Benutzer bereits existiert
@@ -18,7 +18,7 @@ router.post('/register', async (req, res) => {
       }
 
       // Benutzer erstellen und speichern
-      user = new User({ email, password });
+      user = new User({ email, password, username });
       await user.save();
 
       // JWT Token erstellen

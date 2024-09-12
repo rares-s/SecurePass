@@ -19,7 +19,6 @@ const routes: Routes = [
   {
     path: 'home',
     component: MainContentComponent,
-    // canActivate: [AuthGuard], // AuthGuard schützt die Homepage
     children: [
       { path: '', component: DashboardComponent }, // Standard-Route für Homepage
       { path: 'dashboard', component: DashboardComponent }, // Weitere Child-Routen

@@ -43,6 +43,7 @@ export class LoginComponent {
     .subscribe({
       next: (response: any) => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('email', this.email);
         this.router.navigate(['/home/dashboard']);  // Weiterleitung zum Dashboard
       },
       error: (error) => {

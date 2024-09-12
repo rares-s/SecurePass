@@ -23,6 +23,7 @@ export class RegisterComponent {
   email: string = '';
   password: string = '';
   passwordConfirm: string = ''; 
+  username: string = '';
 
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {} // Inject MatSnackBar
 
@@ -36,18 +37,19 @@ export class RegisterComponent {
 
     console.log('Email:', this.email, 'Password:', this.password); // Debugging
   
-    this.http.post('http://localhost:3000/api/auth/register', { email: this.email, password: this.password })
-      .subscribe({
-        next: (response: any) => {
-          localStorage.setItem('token', response.token);  // Save the token
-          this.router.navigate(['/home/dashboard']);      // Redirect after registration
-        },
-        error: (error) => {
-          this.showSnackbar('Registrierung fehlgeschlagen. Überprüfen Sie Ihre Daten.');
-          console.error('Registration failed', error);
-        }
-      });
-  }
+    this.http.post('http://localhost:3000/api/auth/register', {username: this.username, email: this.email, password: this.password })
+    .subscribe({
+      next: (response: any) => {
+        localStorage.setItem('token', response.token);  // Speichere den Token
+         localStorage.setItem('email', this.email); 
+        this.router.navigate(['/home/dashboard']);      // Weiterleiten nach Registrierung
+      },
+      error: (error) => {
+        alert('Registrierung fehlgeschlagen. Überprüfen Sie Ihre Daten.');
+        console.error('Registration failed', error);
+      }
+    });
+}
 
   // Snackbar method for displaying messages
   showSnackbar(message: string) {

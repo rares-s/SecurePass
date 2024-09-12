@@ -1,10 +1,15 @@
-mat-drawer-container {
-  height: 100vh !important;
-}
-
 mat-drawer-content {
  display: flex;
  flex-direction: column;
+ height: 100vh;
+}
+
+.side-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
 }
 
 .sidenav {
@@ -15,6 +20,7 @@ mat-drawer-content {
  color: #FFFFFF; // Weiß für Text
  cursor: default;
  font-size: 1rem;
+ position: fixed;
 
 a {
  display: flex;
@@ -45,11 +51,16 @@ a {
 }
 
 mat-toolbar-row {
- display: flex;
- height: 11.7vh;
- border-bottom: 2px solid rgba(195, 195, 195, 0.25);
  background-color: #4c50a2; 
  color: #FFFFFF; // Weiß für Text
+ position: fixed;
+ top: 0;
+ width: 100%;
+ height: 80px;
+ display: flex;
+ align-items: center;
+ z-index: 100;
+
 
 mat-icon {
  font-size: 1.8rem;
@@ -65,15 +76,10 @@ a {
    }
  }
 }
-mat-toolbar-row {
-  position: absolute;
-  overflow: hidden;
-}
+
 
 mat-toolbar-row img {
- width: 80px;
- border-radius: 10px;
- margin-left: 10px;
+width: 75px;
 }
 
 ul {
@@ -86,26 +92,13 @@ li {
 }
 
 .router-container {
- flex-grow: 1; // Damit der Inhalt den verfügbaren Platz einnimmt
+
  display: flex;
  flex-direction: column;
  width: 100%;
  background-color: #F0F4F8; // Helles Grau für den Hintergrund
  color: #333333; // Dunkles Grau für den Text
- height: 100vh;
-}
-
-.logout {
-  position: absolute;
-  bottom: 0; /* Positioniert den Button am unteren Rand */
-  left: 0; /* Positioniert den Button am linken Rand */
-  padding: 10px; /* Optional: Abstand hinzufügen */
-  margin-left: 10px; /* Optional: Abstand vom Rand hinzufügen */
-}
-
-.logout:hover{
-  background-color: #E07A5F;
-  width: 80%;
+ margin-top: 16px;
 }
 
 .menu-icon {
@@ -134,4 +127,12 @@ li {
 .spacer{
   margin-left: 10px;
   padding: 8px;
+}
+
+.logout{
+  width: 80%;
+  &:hover{
+    background-color: #E07A5F;
+    width: 80%;
+  }
 }

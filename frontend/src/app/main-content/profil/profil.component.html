@@ -1,19 +1,26 @@
-<div class="container">
-    <h2>Profil</h2>
-    <div class="profile-info">
-        <label for="name">Username:</label>
-        <p id="name">Max</p>
+<div class="page">
+    <div class="container">
 
-        <label for="email">E-Mail:</label>
-        <p id="email">example.com</p>
+        <div class="profil flex">
+            <h2>Profil</h2>
+            <div class="profile-info" *ngIf="userData">
 
-        <label for="password">Passwort zurücksetzen:</label> <br>
-        <input type="text" id="password" placeholder="Neues Passwort eingeben">
-    </div>
+                <label for="email">Benutzername:</label>
+                <p id="email">{{ userData.username }}</p>
 
-    <a href="#" class="btn">Passwort zurücksetzen</a>
+                <label for="email">E-Mail:</label>
+                <p id="email">{{userData.email}}</p>
+            </div>
+        </div>
 
-    <div class="websites-count">
-        <p>Anzahl an erstellten Webseiten: <strong>5</strong></p>
+        <div class="account flex">
+            <h2>Einstellungen</h2>
+            <label for="password">Passwort zurücksetzen:</label> <br>
+            <input type="text" id="password" placeholder="Neues Passwort eingeben">
+
+            <button mat-raised-button>Passwort Ändern</button>
+            <button mat-raised-button (click)="confirmDelete()">Account löschen</button>
+        </div>
+
     </div>
 </div>

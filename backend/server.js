@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const authRoutes = require('./routes/auth'); // <-- Auth Routes importieren
 const linkRoutes = require('./routes/links'); // <-- Links Routes importieren
+const userRoutes = require('./routes/users'); // <-- User Routes importieren
 
 const app = express();
 
@@ -23,6 +24,7 @@ db.once('open', () => console.log('Connected to Database'));
 // Routen verwenden
 app.use('/api/auth', authRoutes); // <-- Auth Routes für /api/auth registrieren
 app.use('/api/links', linkRoutes); // <-- Links Routes für /api/links registrieren
+app.use('/api/users', userRoutes); // <-- User Routes 
 
 // Server starten
 const PORT = process.env.PORT || 3000;
