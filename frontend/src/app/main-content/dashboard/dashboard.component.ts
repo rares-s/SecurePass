@@ -14,6 +14,7 @@ import { LinkDetailDialogComponent } from '../../link-detail-dialog/link-detail.
 import { LinkDialogComponent } from '../../link-dialog/link-dialog.component';
 import { MatSelectModule } from '@angular/material/select';  // Importiere MatSelectModule
 import { SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -43,9 +44,10 @@ export class DashboardComponent {
   selectedCategory: string = 'Alle';  // Einzelne ausgewählte Kategorie
   
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private route: ActivatedRoute) {
     this.category = '';
   }
+
   
 
   @Input() category: string = '';  // Empfängt die ausgewählte Kategorie
@@ -57,15 +59,24 @@ export class DashboardComponent {
       this.router.navigate(['/login']);
     } else {
       console.log("Token found, loading links...");
+
+      this.route.paramMap.subscribe(params => {
+      const category = params.get('category') || 'Alle';
+      this.selectedCategory = category;
+      this.filterLinksByCategory(this.selectedCategory);
+    });
       this.loadLinks(); 
     }
   }
+
+
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['category']) {
       this.filterLinksByCategory(this.category);
     }
   }
+
   filterLinksByCategory(category: string) {
     if (category === 'Alle') {
       this.filteredLinks = this.links;
@@ -91,7 +102,7 @@ export class DashboardComponent {
           username: link.username || '',
           category: link.category || ''
         }));
-        this.filteredLinks = this.links; // Alle Links initial anzeigen
+        this.filterLinksByCategory(this.selectedCategory);
       }),
       catchError(this.handleError)
     )
@@ -108,21 +119,31 @@ export class DashboardComponent {
 }
 
 
-  onSearch(event: any) {
-    const searchTerm = event.target.value.trim().toUpperCase();
+ onSearch(event: any) {
+  const searchTerm = event.target.value.trim().toUpperCase();
 
-    if (searchTerm) {
-      this.filteredLinks = this.links.filter(link => link.title.toUpperCase().includes(searchTerm));
-    } else {
-      this.filteredLinks = this.links; // Zeige alle Links an, wenn kein Suchbegriff eingegeben ist
-    }
+  if (searchTerm) {
+    // Filtere nach Kategorie UND Suchbegriff
+    this.filteredLinks = this.links.filter(link => 
+      link.title.toUpperCase().includes(searchTerm) && 
+      (this.selectedCategory === 'Alle' || link.category === this.selectedCategory)
+    );
+  } else {
+    // Wenn kein Suchbegriff vorhanden ist, filtere nur nach Kategorie
+    this.filteredLinks = this.links.filter(link => 
+      this.selectedCategory === 'Alle' || link.category === this.selectedCategory
+    );
   }
+}
   
 
-  resetSearch() {
-    this.searchTerm = '';
-    this.filteredLinks = this.links; // Alle Links zurücksetzen
-  }
+ resetSearch() {
+  this.searchTerm = '';
+  // Filtere nur nach der ausgewählten Kategorie
+  this.filteredLinks = this.links.filter(link => 
+    this.selectedCategory === 'Alle' || link.category === this.selectedCategory
+  );
+}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LinkDialogComponent);

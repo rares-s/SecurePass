@@ -27,7 +27,6 @@ export interface Section {
     MatListModule,
     CommonModule,
     DashboardComponent
-
   ], // Alle Importe aus beiden Komponenten
 
   templateUrl: './main-content.component.html', // Wähle ein Template oder kombiniere sie
@@ -76,7 +75,8 @@ export class MainContentComponent{
   }
 
   selectCategory(category: string) {
-    this.selectedCategory = category;  // Setzt die ausgewählte Kategorie
+    //this.selectedCategory = category;  // Setzt die ausgewählte Kategorie
+    this.router.navigate(['home/dashboard', category]);
   }
 
 // Methode zum Abrufen des passenden Icons

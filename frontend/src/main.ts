@@ -22,10 +22,11 @@ const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent }, // Standard-Route für Homepage
       { path: 'dashboard', component: DashboardComponent }, // Weitere Child-Routen
+      { path: 'dashboard/:category', component: DashboardComponent },
       { path: 'profil', component: ProfilComponent } // Weitere Child-Routen
     ]
   },
-  { path: '**', redirectTo: '/login' } // Fallback für nicht existierende Routen
+  //{ path: '**', redirectTo: '/login' } // Fallback für nicht existierende Routen
 ];
 
 

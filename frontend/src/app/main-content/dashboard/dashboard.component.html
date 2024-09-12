@@ -1,27 +1,25 @@
 <div class="page">
-  
-  <mat-card style="margin-top: 12px; padding: -4px;">
-    <div class="search-bar-leiste">
-        <!-- Suchleiste -->
-        <mat-form-field appearance="outline" class="search-bar">
-          <mat-label><mat-icon class="search-icon">search</mat-icon> Suche</mat-label>
-          <input matInput (keydown.enter)="onSearch($event)" />
-        </mat-form-field>
-      
-        <!-- Zurücksetzen Icon -->
-        <button mat-icon-button class="reset-button" (click)="resetSearch()" matTooltip="Suche zurücksetzen">
-          <mat-icon>refresh</mat-icon>
-        </button>
-      
-        <!-- Hinzufügen Button -->
-        <div class="mat-card-hinzufuegen">
-          <mat-card class="cardHinzufuegen" (click)="openDialog()">
-            <mat-icon class="plus">add_circle_outline</mat-icon>
-          </mat-card>
-        </div>
-      </div>
+
+  <div class="search-bar-leiste">
+    <!-- Suchleiste -->
+    <mat-form-field appearance="outline" class="search-bar" style="width: 300px; height: 60px">
+      <mat-label><mat-icon class="search-icon">search</mat-icon> Suche</mat-label>
+      <input matInput (keydown.enter)="onSearch($event)" />
+    </mat-form-field>
+
+    <!-- Zurücksetzen Icon -->
+    <button mat-icon-button class="reset-button" (click)="resetSearch()" matTooltip="Suche zurücksetzen">
+      <mat-icon>refresh</mat-icon>
+    </button>
+
+    <!-- Hinzufügen Button -->
+    <div class="mat-card-hinzufuegen">
+      <mat-card class="cardHinzufuegen" (click)="openDialog()">
+        <mat-icon class="plus">add_to_photos</mat-icon>
       </mat-card>
-<!--
+    </div>
+  </div>
+  <!--
       <div style="margin-left: 30px;">
         <mat-form-field appearance="fill">
           <mat-label>Kategorie</mat-label>
@@ -36,25 +34,25 @@
 -->
 
 
-<div class="allCards" fxLayout="row wrap">
-  <div *ngFor="let x of filteredLinks" class="mat-cards">
-    <mat-card (click)="openDetailDialog(x)" class="card" [ngStyle]="{'background': x.gradient}">
-      <mat-card-title>
-        {{ x.title }}
-      </mat-card-title>
+  <div class="allCards" fxLayout="row wrap">
+    <div *ngFor="let x of filteredLinks" class="mat-cards">
+      <mat-card (click)="openDetailDialog(x)" class="card" [ngStyle]="{'background': x.gradient}">
+        <mat-card-title>
+          {{ x.title }}
+        </mat-card-title>
 
-      <!-- Kategorie Icon und Name -->
-      <div class="category">
-        <mat-icon>{{ getCategoryIcon(x.category) }}</mat-icon> {{ x.category }}
-      </div>
+        <!-- Kategorie Icon und Name -->
+        <div class="category">
+          <mat-icon>{{ getCategoryIcon(x.category) }}</mat-icon> {{ x.category }}
+        </div>
 
-      <!-- Löschen-Button -->
-      <div class="button-delete" (click)="deleteCard(x._id); $event.stopPropagation()">
-        <mat-icon>close</mat-icon>
-      </div>
-    </mat-card>
+        <!-- Löschen-Button -->
+        <div class="button-delete" (click)="deleteCard(x._id); $event.stopPropagation()">
+          <mat-icon>close</mat-icon>
+        </div>
+      </mat-card>
+    </div>
   </div>
-</div>
 
 
 
