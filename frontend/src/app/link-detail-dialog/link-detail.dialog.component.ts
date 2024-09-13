@@ -50,8 +50,8 @@ export class LinkDetailDialogComponent {
   passwordStrengthDescription: string = 'Schwach';  // Initialize with a default value
 
 
-  togglePasswordVisibility(show: boolean) {
-    this.isPasswordVisible = show;
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   constructor(
@@ -141,11 +141,15 @@ generatePassword(): void {
   }
 
   const generatedPassword = `${parts[0]}-${parts[1]}-${parts[2]}`;
-  this.password = generatedPassword;  // Setze das generierte Passwort in das Eingabefeld
+
+  // Update both 'this.password' and 'data.password' for UI and logic consistency
+  this.password = generatedPassword;
+  this.data.password = generatedPassword;  // Ensure this is reflected in the input field
 
   // Immediately check the password strength after generation
   this.checkPasswordStrength();
 }
+
   
   openWebsite(url: string): void {
     // Überprüfe, ob die URL ein Protokoll enthält (http:// oder https://)

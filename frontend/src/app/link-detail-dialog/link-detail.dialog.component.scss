@@ -95,6 +95,32 @@
   line-height: 1; /* Stellt sicher, dass das Icon zentriert ist */
 }
 
+.eye{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-color: #f1f1f1; /* Einheitliche Hintergrundfarbe wie bei generate-password-button */
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatten für besseren Kontrast */
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 0; /* Entferne zusätzliches Padding */
+}
+
+/* Icon Styling inside the clipboard button */
+.eye mat-icon {
+  font-size: 16px; /* Reduziere die Schriftgröße, um das Icon sichtbar zu machen */
+  color: #666; /* Gleiche Farbe wie bei generate-password-button */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Füllt den Button aus */
+  height: 100%; /* Füllt den Button aus */
+  line-height: 1; /* Stellt sicher, dass das Icon zentriert ist */
+}
+
 
 
 /* Clipboard button after copy animation */

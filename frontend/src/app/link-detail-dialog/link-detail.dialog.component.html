@@ -42,9 +42,10 @@
            [type]="isPasswordVisible ? 'text' : 'password'" 
            [(ngModel)]="data.password" 
            (input)="checkPasswordStrength()"
-           class="placeholderPassword"
-           (mouseenter)="togglePasswordVisibility(true)" 
-           (mouseleave)="togglePasswordVisibility(false)">
+           class="placeholderPassword">
+           <button mat-icon-button matSuffix class="eye" (click)="togglePasswordVisibility()">
+            <mat-icon>{{ isPasswordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
     </mat-form-field>
 
     <!-- Copy to Clipboard Button -->

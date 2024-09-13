@@ -1,6 +1,6 @@
 .page {
   background-color: #4c50a2;
-  background-image: url(../../../assets/background2.svg);
+  background-image: url(../../../assets/background3.svg);
   background-size: cover;
   min-height: 88.5vh;
   border-radius: 20px;
@@ -8,9 +8,7 @@
   flex-direction: column;
   align-items: center;
   
-  /* Blur effect */
-  position: relative;  /* Make the container relative */
-  z-index: 1;
+
 }
 
 .page::before {
@@ -134,10 +132,13 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
 }
 
-.search-bar {
+.search-bar{
   flex-direction: row;
   border: none !important;
+
 }
+
+
 
 ::ng-deep .mat-mdc-form-field-infix {
   max-width: 300px !important;
