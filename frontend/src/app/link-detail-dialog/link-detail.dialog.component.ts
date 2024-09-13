@@ -99,15 +99,17 @@ checkPasswordStrength(): void {
   // Cap the strength to 100
   this.passwordStrength = Math.min(Math.max(strength, 0), 100);
 
-  // Assign strength description
-  if (this.passwordStrength <= 30) {
+   // Assign strength description
+   if (this.passwordStrength <= 30) {
     this.passwordStrengthDescription = 'Schwach';
   } else if (this.passwordStrength <= 60) {
     this.passwordStrengthDescription = 'Mittelmäßig';
   } else if (this.passwordStrength <= 80) {
     this.passwordStrengthDescription = 'Stark';
-  } else {
+  } else if (this.passwordStrength < 100) {
     this.passwordStrengthDescription = 'Sehr Stark';
+  } else {
+    this.passwordStrengthDescription = 'Fast Unmöglich';
   }
 }
   
