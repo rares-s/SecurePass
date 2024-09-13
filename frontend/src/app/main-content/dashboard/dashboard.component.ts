@@ -15,6 +15,8 @@ import { LinkDialogComponent } from '../../link-dialog/link-dialog.component';
 import { MatSelectModule } from '@angular/material/select';  // Importiere MatSelectModule
 import { SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 
 
@@ -44,7 +46,7 @@ export class DashboardComponent {
   selectedCategory: string = 'Alle';  // Einzelne ausgewählte Kategorie
   
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar) {
     this.category = '';
   }
 
@@ -220,22 +222,45 @@ generateGradientWithUserColor(userColor: string): string {
 
   
 
-  deleteCard(id: string) {
-    const token = localStorage.getItem('token');
-    const url = `http://localhost:3000/api/links/${id}`;
-    
-    this.http.delete(url, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-    .pipe(
-      tap(() => {
-        this.links = this.links.filter(link => link._id !== id);
-        this.filteredLinks = this.links; // Update filteredLinks as well
-      }),
-      catchError(this.handleError)
-    )
-    .subscribe();
-  }
+deleteCard(id: string) {
+  // Open a Snackbar asking the user to confirm the deletion
+  const snackBarRef = this.snackBar.open('Möchten Sie die Kachel wirklich löschen?', 'Löschen', {
+    horizontalPosition: 'center',
+    verticalPosition: 'top',
+    duration: 2000, // Snackbar will disappear after 5 seconds
+  });
+
+  // When the user clicks on "Löschen"
+  snackBarRef.onAction().subscribe(() => {
+    // Ask for final confirmation with another Snackbar
+    const confirmSnackBar = this.snackBar.open('Sind Sie sicher?', 'Ja', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 2000,
+    });
+
+    // If "Ja" is clicked, delete the card
+    confirmSnackBar.onAction().subscribe(() => {
+      const token = localStorage.getItem('token');
+      const url = `http://localhost:3000/api/links/${id}`;
+      
+      this.http.delete(url, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .pipe(
+        tap(() => {
+          this.links = this.links.filter(link => link._id !== id);
+          this.filteredLinks = this.links; // Update filteredLinks as well
+        }),
+        catchError(this.handleError)
+      )
+      .subscribe();
+    });
+  });
+
+  // If the user dismisses the snackbars, nothing will happen
+}
+
 
   onLogout() {
     localStorage.removeItem('token');  

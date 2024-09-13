@@ -110,7 +110,7 @@ changePassword() {
       },
       error: (error) => {
         console.error('Error changing password:', error);
-        this.snackBar.open('Failed to change password. Please try again.', 'OK', {
+        this.snackBar.open('Passwort ändern fehlgeschlagen. Bitte versuchen Sie es erneut.', 'OK', {
           horizontalPosition: 'center',
           verticalPosition: 'top', 
           duration: 3000

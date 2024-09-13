@@ -2,16 +2,17 @@
   
 
   <div class="search-bar-leiste">
+
+     <!-- Zurücksetzen Icon -->
+     <button mat-icon-button class="reset-button" (click)="resetSearch()" matTooltip="Suche zurücksetzen">
+      <mat-icon>refresh</mat-icon>
+    </button>
+    
     <!-- Suchleiste -->
     <mat-form-field appearance="outline" class="search-bar" style="width: 300px; height: 60px">
       <mat-label><mat-icon class="search-icon">search</mat-icon> Suche</mat-label>
       <input matInput (keydown.enter)="onSearch($event)" />
     </mat-form-field>
-
-    <!-- Zurücksetzen Icon -->
-    <button mat-icon-button class="reset-button" (click)="resetSearch()" matTooltip="Suche zurücksetzen">
-      <mat-icon>refresh</mat-icon>
-    </button>
 
     <!-- Hinzufügen Button -->
     <div class="mat-card-hinzufuegen">
