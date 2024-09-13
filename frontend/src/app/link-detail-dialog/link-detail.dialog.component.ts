@@ -151,15 +151,15 @@ generatePassword(): void {
 }
 
   
-  openWebsite(url: string): void {
-    // Überprüfe, ob die URL ein Protokoll enthält (http:// oder https://)
-    if (!/^https?:\/\//i.test(url)) {
-      url = 'https://' + url; // Füge 'https://' hinzu, wenn es fehlt
-    }
-  
-    // Öffne die Webseite in einem neuen Tab
-    window.open(url, '_blank');
+openWebsite(url: string): void {
+  // Überprüfe, ob die URL ein Protokoll enthält (http:// oder https://)
+  if (!/^https?:\/\//i.test(url)) {
+    url = 'https://' + url; // Füge 'https://' hinzu, wenn es fehlt
   }
+
+  // Öffne die Webseite in einem neuen Tab mit noreferrer und noopener
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
 
 
   onClose(): void {
