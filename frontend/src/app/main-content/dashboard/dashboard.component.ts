@@ -222,9 +222,9 @@ generateGradientWithUserColor(userColor: string): string {
 
   
 
-deleteCard(id: string) {
+deleteCard(id: string, title: string) {
   // Open a Snackbar asking the user to confirm the deletion
-  const snackBarRef = this.snackBar.open('Möchten Sie die Kachel wirklich löschen?', 'Löschen', {
+  const snackBarRef = this.snackBar.open(`Möchten Sie die Kachel "${title}" wirklich löschen?`, 'Löschen', {
     horizontalPosition: 'center',
     verticalPosition: 'top',
     duration: 2000, // Snackbar will disappear after 5 seconds
