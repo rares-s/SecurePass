@@ -1,25 +1,48 @@
 <div class="page">
     <div class="container">
 
-        <div class="profil flex">
+        <div class="profil flex" style="cursor: default">
             <h2>Profil</h2>
+
             <div class="profile-info" *ngIf="userData">
-
-                <label for="email">Benutzername:</label>
-                <p id="email">{{ userData.username }}</p>
-
-                <label for="email">E-Mail:</label>
-                <p id="email">{{userData.email}}</p>
+                <table>
+                  <tr>
+                    <td>
+                      <label for="username">Username:</label>
+                    </td>
+                    <td>
+                      <p id="username" class="profile-value">{{ userData.username }}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="email">E-Mail:</label>
+                    </td>
+                    <td>
+                      <p id="email" class="profile-value">{{ userData.email }}</p>
+                    </td>
+                  </tr>
+                </table>
             </div>
+
         </div>
 
         <div class="account flex">
-            <h2>Einstellungen</h2>
-            <label for="password">Passwort zurücksetzen:</label> <br>
-            <input type="text" id="password" placeholder="Neues Passwort eingeben">
+            <h2 style="cursor: default">Einstellungen</h2>
 
-            <button mat-raised-button>Passwort Ändern</button>
-            <button mat-raised-button (click)="confirmDelete()">Account löschen</button>
+            <div class="pw-info" style="flex-wrap: wrap; margin-top: -4px;">            
+                <label for="password"><u>Passwort zurücksetzen:</u></label>
+                <input type="text" [(ngModel)]="oldPassword" class="password-field" style="margin-top: 12px; width: 85%;" placeholder="Altes Passwort eingeben">
+                <input type="text" [(ngModel)]="newPassword" class="password-field" style="margin-top: 12px; width: 85%;" placeholder="Neues Passwort eingeben">
+            </div>
+
+            <br>
+
+            <div style="display: flex; justify-content: space-between; width: 100%; margin-top: -12px;">
+                <button mat-raised-button (click)="changePassword()">Passwort ändern</button>
+                <button mat-raised-button (click)="confirmDelete()">Account löschen</button>
+            </div>
+
         </div>
 
     </div>

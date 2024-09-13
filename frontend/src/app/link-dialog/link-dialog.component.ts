@@ -11,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select'; // Import MatSelectModule
 import { CommonModule } from '@angular/common';  // Import CommonModule
+import { MatProgressBarModule } from '@angular/material/progress-bar';  // Import MatProgressBarModule
 
 
 
@@ -29,7 +30,8 @@ import { CommonModule } from '@angular/common';  // Import CommonModule
     MatCardModule,
     MatDividerModule,
     MatSelectModule,
-    CommonModule
+    CommonModule,
+    MatProgressBarModule
   ],
   templateUrl: './link-dialog.component.html',
   styleUrls: ['./link-dialog.component.scss']
@@ -42,6 +44,8 @@ export class LinkDialogComponent {
   public username: string = ''; // Username hinzufügen
   public categories: string[] = ['Arbeit', 'SocialMedia', 'Privat', 'Sonstiges'];  // Add this array for categories
   public category: string = '';  // Add a binding for the selected category
+  public passwordStrength: number = 0;  // Variable für Passwortstärke
+  public passwordStrengthDescription: string = 'Schwach';  // Initialize with a default value
   
  
   
@@ -70,21 +74,78 @@ export class LinkDialogComponent {
     this.selectedColor = '#8800e0'; // Standardfarbe
   }
 
+  // Function to calculate password strength
+  checkPasswordStrength() {
+    let strength = 0;
+  
+    // Check length
+    if (this.password.length >= 8) {
+      strength += 30; // Adjust to give more weight to length
+    }
+    if (this.password.length >= 12) {
+      strength += 20; // Add bonus for extra length
+    }
+  
+    // Check for uppercase, numbers, and special characters
+    if (/[A-Z]/.test(this.password)) strength += 20;
+    if (/\d/.test(this.password)) strength += 10;
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(this.password)) strength += 15;
+    if (/[a-z]/.test(this.password)) strength += 10;
+  
+    // Reduce penalty for repeated characters, if needed
+    if (/(.)\1{2,}/.test(this.password)) strength -= 5;
+  
+    // Cap the strength to 100
+    this.passwordStrength = Math.min(Math.max(strength, 0), 100);
+  
+    // Assign strength description
+    if (this.passwordStrength <= 30) {
+      this.passwordStrengthDescription = 'Schwach';
+    } else if (this.passwordStrength <= 60) {
+      this.passwordStrengthDescription = 'Mittelmäßig';
+    } else if (this.passwordStrength <= 80) {
+      this.passwordStrengthDescription = 'Stark';
+    } else if (this.passwordStrength < 100) {
+      this.passwordStrengthDescription = 'Sehr Stark';
+    } else {
+      this.passwordStrengthDescription = 'Fast Unmöglich';
+    }
+  }
+  
+
 // Methode zum Generieren eines sicheren Passworts
 generatePassword(): void {
   const parts = [];
-  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const charsetLower = 'abcdefghijklmnopqrstuvwxyz';
+  const charsetUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const charsetNumbers = '0123456789';
+  const charsetSpecial = '!@#$%^&*()';
+
   for (let i = 0; i < 3; i++) {
     let part = '';
-    for (let j = 0; j < 6; j++) {
-      const randomIndex = Math.floor(Math.random() * charset.length);
-      part += charset[randomIndex];
+    
+    // Ensure each part contains at least one of each type: lowercase, uppercase, number, special character
+    part += charsetLower[Math.floor(Math.random() * charsetLower.length)];
+    part += charsetUpper[Math.floor(Math.random() * charsetUpper.length)];
+    part += charsetNumbers[Math.floor(Math.random() * charsetNumbers.length)];
+    part += charsetSpecial[Math.floor(Math.random() * charsetSpecial.length)];
+    
+    // Fill the rest of the part with random characters from all charsets
+    const allChars = charsetLower + charsetUpper + charsetNumbers + charsetSpecial;
+    for (let j = 4; j < 6; j++) { // Already added 4 characters, fill the rest
+      const randomIndex = Math.floor(Math.random() * allChars.length);
+      part += allChars[randomIndex];
     }
     parts.push(part);
   }
+
   const generatedPassword = `${parts[0]}-${parts[1]}-${parts[2]}`;
   this.password = generatedPassword;  // Setze das generierte Passwort in das Eingabefeld
+
+  // Immediately check the password strength after generation
+  this.checkPasswordStrength();
 }
+
 
   // Methode zum Aktualisieren der ausgewählten Farbe
   onColorChange(color: string): void {
@@ -93,3 +154,7 @@ generatePassword(): void {
 
 
 }
+function checkPasswordStrength() {
+  throw new Error('Function not implemented.');
+}
+

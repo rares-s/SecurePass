@@ -254,15 +254,32 @@ generateGradientWithUserColor(userColor: string): string {
 
   openDetailDialog(link: { _id: string; url: string; title: string; password: string, description: string, username: string, category: string }): void {
     const dialogRef = this.dialog.open(LinkDetailDialogComponent, {
-      data: { _id: link._id, url: link.url, label: link.title, password: link.password, description: link.description, username: link.username, category: link.category }
+      data: { 
+        _id: link._id, 
+        url: link.url, 
+        label: link.title, 
+        password: link.password,  // Ensure password is passed correctly
+        description: link.description, 
+        username: link.username, 
+        category: link.category 
+      }
     });
-
+  
+    dialogRef.afterOpened().subscribe(() => {
+      const dialogInstance = dialogRef.componentInstance;
+      if (dialogInstance && dialogInstance.password) {
+        dialogInstance.checkPasswordStrength();  // Check password strength right after the dialog opens
+      }
+    });
+  
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        // Call your backend again after the dialog is closed, to save changes
         this.loadLinks();
       }
     });
   }
+  
 
   getCategoryIcon(category: string): string {
     switch (category) {

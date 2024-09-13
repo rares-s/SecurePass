@@ -1,4 +1,7 @@
 import {
+  NG_VALUE_ACCESSOR
+} from "./chunk-C2HWDNGU.js";
+import {
   MatDividerModule
 } from "./chunk-KTT3NMCN.js";
 import {
@@ -20,9 +23,6 @@ import {
   _getFocusedElementPierceShadowDom,
   hasModifierKey
 } from "./chunk-BLBJ3LTL.js";
-import {
-  NG_VALUE_ACCESSOR
-} from "./chunk-C2HWDNGU.js";
 import {
   coerceBooleanProperty,
   coerceNumberProperty

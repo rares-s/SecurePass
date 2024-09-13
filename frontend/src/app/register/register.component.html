@@ -19,8 +19,14 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Passwort</mat-label>
-          <input matInput [(ngModel)]="password" name="password" type="password" required>
+          <input matInput [(ngModel)]="password" (input)="checkPasswordStrength()" name="password" type="password" required>
         </mat-form-field>
+
+        <div class="pwMeter" *ngIf="password.length > 0">
+          <mat-progress-bar mode="determinate" [value]="passwordStrength"></mat-progress-bar>
+          <p>{{ passwordStrengthDescription }}</p>
+        </div>
+
 
         <mat-form-field appearance="fill">
           <mat-label>Passwort wiederholen</mat-label>

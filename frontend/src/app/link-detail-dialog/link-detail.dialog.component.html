@@ -12,26 +12,39 @@
   <div mat-dialog-content class="matdiv">
     <!-- URL Field (readonly) -->
     <div class="inputFields">
-    <mat-form-field appearance="outline" style="margin-right: 24px;">
+    <mat-form-field appearance="outline" style="margin-right: 24px; width: 45%;">
       <mat-label>URL</mat-label>
       <input matInput [value]="stripProtocol(data.url)" readonly>
     </mat-form-field>
 
     <!-- Name Field (readonly) -->
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" style="width: 45%;">
       <mat-label>Kachelname</mat-label>
       <input matInput [value]="data.label" readonly>
     </mat-form-field>
   </div>
   </div>
 
-     <!-- Password Field with Generate Button -->
+  <!-- Password Field with Generate Button -->
+  <div class="username-field" style="width: 180px;">
+    <mat-form-field appearance="outline" class="password-input">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="data.username" class="placeholderPassword">
+    </mat-form-field>
+    </div>
+
+    <!-- Password Field with Generate Button -->
     <!-- Password Field with Hover Visibility -->
   <div class="password-field">
     <mat-form-field appearance="outline" class="password-input">
       <mat-label>Password</mat-label>
-      <input matInput [type]="isPasswordVisible ? 'text' : 'password'" [(ngModel)]="data.password" class="placeholderPassword"
-             (mouseenter)="togglePasswordVisibility(true)" (mouseleave)="togglePasswordVisibility(false)">
+      <input matInput 
+           [type]="isPasswordVisible ? 'text' : 'password'" 
+           [(ngModel)]="data.password" 
+           (input)="checkPasswordStrength()"
+           class="placeholderPassword"
+           (mouseenter)="togglePasswordVisibility(true)" 
+           (mouseleave)="togglePasswordVisibility(false)">
     </mat-form-field>
 
     <!-- Copy to Clipboard Button -->
@@ -49,6 +62,15 @@
   </div>
 </div>
 
+
+   <!-- Password Strength Meter -->
+   <div class="pwMeter" *ngIf="password.length > 0">
+    <mat-progress-bar mode="determinate" [value]="passwordStrength"></mat-progress-bar>
+    <p>{{ passwordStrengthDescription }}</p>
+  </div>
+
+
+<div class="category">
 <mat-form-field appearance="fill">
   <mat-label>Kategorie</mat-label>
   <mat-select [(ngModel)]="data.category">
@@ -57,16 +79,17 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
+</div>
 
 
 
-
+<div class="notice">
 <mat-form-field appearance="outline" class="description-input">
   <mat-label>Notiz</mat-label>
   <textarea matInput [(ngModel)]="data.description" maxlength="80"></textarea>
-  <mat-hint align="end">{{description.length || 0}}/80</mat-hint>
+  <mat-hint align="end">{{data.description.length || 0}}/80</mat-hint>
 </mat-form-field>
-
+</div>
 
 
 

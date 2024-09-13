@@ -35,6 +35,7 @@ export interface Section {
 
 
 export class MainContentComponent{
+  links: any[] = []; 
 
   folders: Section[] = [
     {
@@ -73,6 +74,11 @@ export class MainContentComponent{
     localStorage.removeItem('token');  // Token aus dem Local Storage entfernen
     this.router.navigate(['/login']);  // Weiterleitung zur Login-Seite
   }
+
+    // Method to get the number of websites
+    getWebsiteCount(): number {
+      return this.links.length;
+    }
 
   selectCategory(category: string) {
     //this.selectedCategory = category;  // Setzt die ausgewählte Kategorie

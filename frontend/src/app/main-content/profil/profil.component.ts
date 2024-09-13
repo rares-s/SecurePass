@@ -4,11 +4,19 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSnackBarModule
+import { FormsModule } from '@angular/forms';  // Import FormsModule
+
+
 
 @Component({
   selector: 'app-profil',
   standalone: true,
-  imports: [CommonModule, MatButtonModule],
+  imports: [CommonModule, 
+    MatButtonModule, 
+    MatSnackBarModule,
+    FormsModule
+  ],
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss']
 })
@@ -16,8 +24,10 @@ export class ProfilComponent {
 
   private apiUrl = 'http://localhost:3000/api/users';
   public userData: any; // Hier werden die Benutzerdaten gespeichert
+  oldPassword: string = ''; // Bind to the input field for old password
+  newPassword: string = ''; // Bind to the input field for new password
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient, private snackBar: MatSnackBar) {
     this.checkAuthentication();  // Prüft, ob der Benutzer eingeloggt ist
     const email = localStorage.getItem('email');
   }
@@ -80,29 +90,83 @@ loadUser(token: string) {
     });
   }
 
-  confirmDelete() {
-    if (confirm('Bist du sicher, dass du dein Konto löschen möchtest?')) {
-      this.deleteAccount();
-    }
-  }
+// Password change functionality
+changePassword() {
+  const userId = this.userData._id; // Get the user ID from userData
+  const payload = { oldPassword: this.oldPassword, newPassword: this.newPassword };
+  
+  this.http.put(`http://localhost:3000/api/users/${userId}/changePassword`, payload)
+    .subscribe({
+      next: (response) => {
+        this.snackBar.open('Password changed successfully!', 'OK', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top', 
+          duration: 3000
+        });
 
-deleteAccount() {
+        // Reset the input fields
+        this.oldPassword = '';
+        this.newPassword = '';
+      },
+      error: (error) => {
+        console.error('Error changing password:', error);
+        this.snackBar.open('Failed to change password. Please try again.', 'OK', {
+          horizontalPosition: 'center',
+          verticalPosition: 'top', 
+          duration: 3000
+        });
+      }
+    });
+}
+
+  
+  
+
+  confirmDelete() {
+    const snackBarRef = this.snackBar.open('Möchten Sie Ihr Konto wirklich löschen?', 'Löschen', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 5000, // Duration for how long the snackbar remains on the screen
+    });
+  
+    // If the user clicks on "Löschen"
+    snackBarRef.onAction().subscribe(() => {
+      // Show another snackBar asking for final confirmation or cancellation
+      const confirmSnackBar = this.snackBar.open('Sind Sie sicher?', 'Ja', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 5000,
+      });
+  
+      // If "Ja" is clicked, the account will be deleted
+      confirmSnackBar.onAction().subscribe(() => {
+        this.deleteAccount(); // Call the deleteAccount function
+      });
+    });
+  
+    // The user can simply dismiss the snackbar (implicitly choosing "Nein") by not clicking "Löschen"
+  }
+  
+
+  deleteAccount() {
     const token = localStorage.getItem('token');
     if (!token) {
       console.log('Not logged in - redirecting to login');
       this.router.navigate(['/login']);
       return;
     }
-
+  
     const userId = this.userData._id; // Benutzer-ID aus den Benutzerdaten entnehmen
-
+  
     this.http.delete(`${this.apiUrl}/${userId}`)
       .pipe(
         catchError(this.handleError)
       )
       .subscribe({
         next: () => {
-          alert('Account wurde erfolgreich gelöscht.');
+          this.snackBar.open('Account wurde erfolgreich gelöscht.', 'OK', {horizontalPosition: 'center',
+            verticalPosition: 'top',
+            duration: 5000}); // Open snackbar
           this.onLogout(); // Logge den Benutzer aus und leite zur Login-Seite weiter
         },
         error: (error) => {

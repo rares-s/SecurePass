@@ -10,6 +10,8 @@ import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
 import { HttpClient, HttpClientModule } from '@angular/common/http'; // HttpClient importieren
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 
 @Component({
@@ -27,7 +29,8 @@ import { CommonModule } from '@angular/common';
     MatCardModule,
     HttpClientModule,
     MatSelectModule,
-    CommonModule
+    CommonModule,
+    MatProgressBarModule
   ]
 })
 export class LinkDetailDialogComponent {
@@ -43,6 +46,9 @@ export class LinkDetailDialogComponent {
   categories: string[] = ['Arbeit', 'SocialMedia', 'Privat', 'Sonstiges'];
 
   isPasswordVisible = false;  // Steuert die Sichtbarkeit des Passworts
+  passwordStrength: number = 0;  // Variable für Passwortstärke
+  passwordStrengthDescription: string = 'Schwach';  // Initialize with a default value
+
 
   togglePasswordVisibility(show: boolean) {
     this.isPasswordVisible = show;
@@ -66,21 +72,78 @@ export class LinkDetailDialogComponent {
   }
   
 
-  // Methode zum Generieren eines sicheren Passworts
-  generatePassword(): void {
-    const parts = [];
-    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    for (let i = 0; i < 3; i++) {
-      let part = '';
-      for (let j = 0; j < 6; j++) {
-        const randomIndex = Math.floor(Math.random() * charset.length);
-        part += charset[randomIndex];
-      }
-      parts.push(part);
-    }
-    const generatedPassword = `${parts[0]}-${parts[1]}-${parts[2]}`;
-    this.data.password = generatedPassword;  // Setze das generierte Passwort in das Datenobjekt
+  // Function to calculate password strength
+checkPasswordStrength(): void {
+  let strength = 0;
+
+  // Use this.data.password directly here
+  const password = this.data.password || ''; 
+
+  // Check length
+  if (password.length >= 8) {
+    strength += 30; // Adjust to give more weight to length
   }
+  if (password.length >= 12) {
+    strength += 20; // Add bonus for extra length
+  }
+
+  // Check for uppercase, numbers, and special characters
+  if (/[A-Z]/.test(password)) strength += 20;
+  if (/\d/.test(password)) strength += 10;
+  if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 15;
+  if (/[a-z]/.test(password)) strength += 10;
+
+  // Reduce penalty for repeated characters, if needed
+  if (/(.)\1{2,}/.test(password)) strength -= 5;
+
+  // Cap the strength to 100
+  this.passwordStrength = Math.min(Math.max(strength, 0), 100);
+
+  // Assign strength description
+  if (this.passwordStrength <= 30) {
+    this.passwordStrengthDescription = 'Schwach';
+  } else if (this.passwordStrength <= 60) {
+    this.passwordStrengthDescription = 'Mittelmäßig';
+  } else if (this.passwordStrength <= 80) {
+    this.passwordStrengthDescription = 'Stark';
+  } else {
+    this.passwordStrengthDescription = 'Sehr Stark';
+  }
+}
+  
+
+// Methode zum Generieren eines sicheren Passworts
+generatePassword(): void {
+  const parts = [];
+  const charsetLower = 'abcdefghijklmnopqrstuvwxyz';
+  const charsetUpper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const charsetNumbers = '0123456789';
+  const charsetSpecial = '!@#$%^&*()';
+
+  for (let i = 0; i < 3; i++) {
+    let part = '';
+    
+    // Ensure each part contains at least one of each type: lowercase, uppercase, number, special character
+    part += charsetLower[Math.floor(Math.random() * charsetLower.length)];
+    part += charsetUpper[Math.floor(Math.random() * charsetUpper.length)];
+    part += charsetNumbers[Math.floor(Math.random() * charsetNumbers.length)];
+    part += charsetSpecial[Math.floor(Math.random() * charsetSpecial.length)];
+    
+    // Fill the rest of the part with random characters from all charsets
+    const allChars = charsetLower + charsetUpper + charsetNumbers + charsetSpecial;
+    for (let j = 4; j < 6; j++) { // Already added 4 characters, fill the rest
+      const randomIndex = Math.floor(Math.random() * allChars.length);
+      part += allChars[randomIndex];
+    }
+    parts.push(part);
+  }
+
+  const generatedPassword = `${parts[0]}-${parts[1]}-${parts[2]}`;
+  this.password = generatedPassword;  // Setze das generierte Passwort in das Eingabefeld
+
+  // Immediately check the password strength after generation
+  this.checkPasswordStrength();
+}
   
   openWebsite(url: string): void {
     // Überprüfe, ob die URL ein Protokoll enthält (http:// oder https://)
