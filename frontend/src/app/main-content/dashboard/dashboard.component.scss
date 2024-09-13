@@ -65,7 +65,7 @@
   font-size: 20px;
   margin-bottom: 24px;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   color: white;
@@ -125,12 +125,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 25px;
-  gap:15px;
+  padding: 24px;
+  gap:20px;
   background-color: #dddefb;
-  border-radius: 25px;
+  border-radius: 50px;
   height: 40px;
   margin-top: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.18);
 }
 
 .search-bar {
