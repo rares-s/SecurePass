@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -138,6 +138,7 @@ export class DashboardComponent {
   }
 }
   
+@ViewChild('searchInput') searchInput!: ElementRef;
 
  resetSearch() {
   this.searchTerm = '';
@@ -145,12 +146,16 @@ export class DashboardComponent {
   this.filteredLinks = this.links.filter(link => 
     this.selectedCategory === 'Alle' || link.category === this.selectedCategory
   );
+  this.searchInput.nativeElement.value = '';
 }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LinkDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        if (!result.category) {
+          result.category = 'Sonstiges';
+        }
         this.createNewCard(
           result.url, 
           result.label, 
@@ -227,7 +232,7 @@ deleteCard(id: string, title: string) {
   const snackBarRef = this.snackBar.open(`Möchten Sie die Kachel "${title}" wirklich löschen?`, 'Löschen', {
     horizontalPosition: 'center',
     verticalPosition: 'top',
-    duration: 2000, // Snackbar will disappear after 5 seconds
+    duration: 3000, // Snackbar will disappear after 3 seconds
   });
 
   // When the user clicks on "Löschen"
@@ -236,7 +241,7 @@ deleteCard(id: string, title: string) {
     const confirmSnackBar = this.snackBar.open('Sind Sie sicher?', 'Ja', {
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      duration: 2000,
+      duration: 3000,
     });
 
     // If "Ja" is clicked, delete the card

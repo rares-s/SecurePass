@@ -19,6 +19,8 @@ const UserSchema = new Schema({
   username: { type: String, required: true }, //Username
   email: { type: String, required: true, unique: true }, // E-Mail für Login
   password: { type: String, required: true }, // Passwort für Login
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   websites: [WebsiteDataSchema] // Array von Webseiten-Daten
 }, {
   timestamps: true  // Automatische Zeitstempel

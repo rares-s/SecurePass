@@ -11,7 +11,7 @@
     <!-- Suchleiste -->
     <mat-form-field appearance="outline" class="search-bar" style="width: 300px; height: 60px">
       <mat-label><mat-icon class="search-icon">search</mat-icon> Suche</mat-label>
-      <input matInput (keydown.enter)="onSearch($event)" />
+      <input #searchInput matInput (keydown.enter)="onSearch($event)" />
     </mat-form-field>
 
     <!-- Hinzufügen Button -->

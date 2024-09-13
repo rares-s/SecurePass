@@ -4,12 +4,15 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth'); // <-- Auth Routes importieren
 const linkRoutes = require('./routes/links'); // <-- Links Routes importieren
 const userRoutes = require('./routes/users'); // <-- User Routes importieren
+const resetPasswordRoutes = require('./routes/resetpassword');
+
 
 const app = express();
 
 // Middlewares
 app.use(express.json());
 app.use(cors());
+app.use('/api', resetPasswordRoutes);
 
 // MongoDB Verbindung
 mongoose.connect('mongodb+srv://raressimoiu:3FS8jGZI9uy4fDmX@cluster0.5qimy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {

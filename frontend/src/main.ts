@@ -10,12 +10,17 @@ import { AuthGuard } from './app/auth.guard';
 import { DashboardComponent } from './app/main-content/dashboard/dashboard.component';
 import { ProfilComponent } from './app/main-content/profil/profil.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
-
+import { ForgotPasswordComponent } from './app/forgot-password/forgot-password.component';  // Importiere die neue Komponente
+import { ResetPasswordComponent } from './app/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent }, // explizite Route für Login
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Standard-Redirect zur Login-Seite
   { path: 'register', component: RegisterComponent }, // Route zur Registrierungsseite
+  { path: 'forgot-password', component: ForgotPasswordComponent },  // Neue Route für Passwort zurücksetzen
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
+
+
   {
     path: 'home',
     component: MainContentComponent,

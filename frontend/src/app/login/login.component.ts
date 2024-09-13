@@ -72,4 +72,8 @@ export class LoginComponent {
   routeRegistrieren() {
     this.router.navigate(['/register']);
   }
+
+  routeForgotPassword() {
+    this.router.navigate(['/forgot-password']);  // Navigiere zur Passwort vergessen Seite
+  }
 }
