@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User'); // Dein User-Modell
+const { sendEmail } = require('./mailService'); // Import mail service
 const jwtSecret = 'deinGeheimesToken';
 
 
@@ -21,8 +22,29 @@ router.post('/register', async (req, res) => {
       user = new User({ email, password, username });
       await user.save();
 
+               // Send welcome email
+               const emailSubject = "Willkommen bei SecurePass!";
+               const emailBody = `
+                    <h3>Hallo ${username},</h3>
+                      <p>Willkommen bei <strong>SecurePass</strong>! Wir freuen uns, dich an Bord zu haben. Mit SecurePass kannst du deine Passwörter sicher verwalten und stets den Überblick behalten. So kannst du loslegen:</p>
+                      <ul>
+                          <li><strong>Melde dich in deinem Konto an</strong>: Logge dich ein, um direkt auf dein persönliches Dashboard zuzugreifen.</li>
+                          <li><strong>Erkunde unsere Funktionen zur Passwortverwaltung</strong>: Sichere deine Anmeldedaten für all deine Konten an einem Ort, erstelle sichere Passwörter mit unserem Passwortgenerator und überprüfe die Stärke deiner bestehenden Passwörter.</li>
+                          <li><strong>Sichere Notizen</strong>: Nutze die Funktion für sichere Notizen, um wichtige Informationen zu speichern, die du geschützt aufbewahren möchtest.</li>
+                          <li><strong>Passwort-Synchronisation</strong>: Deine Passwörter sind auf all deinen Geräten synchronisiert und sofort einsatzbereit, egal ob du am Computer oder mobil unterwegs bist.</li>
+                          
+                      </ul>
+                      <p><strong>Bleib sicher!</strong></p>
+                      <p>Falls du Fragen hast oder Unterstützung benötigst, kannst du jederzeit unser <a href="mailto:support@securepass.com">Support-Team kontaktieren</a>.</p>
+                      <p>Beste Grüße,<br>Das SecurePass Team</p>
+               `;
+       
+               sendEmail(email, emailSubject, emailBody);
+       
+
       // JWT Token erstellen
       const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '1h' });
+
 
       res.status(201).json({ token, message: 'Benutzer erfolgreich registriert' });
     } catch (err) {

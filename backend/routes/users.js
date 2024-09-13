@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');  // <-- Add this line
 
 
+
 router.get('/email/:email', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.params.email });
