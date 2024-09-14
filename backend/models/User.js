@@ -11,7 +11,8 @@ const WebsiteDataSchema = new Schema({
   gradient: { type: String, required: false },
   description: { type: String, required: false },  // Gespeichertes Passwort für die Webseite
   category: { type: String, required: true, default: 'Sonstiges'},  // Kategorie
-  timestamp: { type: Date, default: Date.now } // Zeitstempel der Erstellung
+  timestamp: { type: Date, default: Date.now }, // Zeitstempel der Erstellung
+  order: { type: Number, default: 0 },
 });
 
 // Schema für den Benutzer

@@ -45,11 +45,10 @@
 
 /* Karten-Layout */
 .allCards {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-gap: 25px;
   padding: 32px;
-  gap: 25px;
 }
 
 /* Karten-Design */
@@ -225,5 +224,50 @@
   }
 }
 
+.drag-mode {
+  cursor: move;
+  // Weitere Stile für den Drag-Modus
+}
 
+.cdk-drop-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
 
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 180px;
+  height: 120px;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.drag-hint {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background-color: #ffeb3b;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Wiggle-Effekt */
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.wiggle {
+  animation: wiggle 0.3s infinite;
+}

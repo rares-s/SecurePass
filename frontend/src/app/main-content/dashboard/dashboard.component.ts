@@ -16,6 +16,10 @@ import { MatSelectModule } from '@angular/material/select';  // Importiere MatSe
 import { SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDragStart, CdkDragEnd } from '@angular/cdk/drag-drop';
+
+
 
 
 
@@ -32,7 +36,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatInputModule,      
     CommonModule, 
     FormsModule,
-    MatSelectModule
+    MatSelectModule,
+    DragDropModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -44,12 +49,126 @@ export class DashboardComponent {
   searchTerm: string = ''; 
   categories: string[] = ['Arbeit', 'SocialMedia', 'Privat', 'Sonstiges'];
   selectedCategory: string = 'Alle';  // Einzelne ausgewählte Kategorie
+
+
+
   
 
   constructor(private http: HttpClient, private dialog: MatDialog, private router: Router, private route: ActivatedRoute, private snackBar: MatSnackBar) {
     this.category = '';
   }
 
+
+  dragEnabled: boolean = false;
+  pressTimer: any;
+  isDragging: boolean = false;
+
+  onDragStarted(event: CdkDragStart) {
+    this.isDragging = true;
+  }
+
+  onDragEnded(event: CdkDragEnd) {
+    this.isDragging = false;
+  }
+
+  onCardClick(link: any) {
+    if (this.isDragging) {
+      return;
+    }
+    this.openDetailDialog(link);
+  }
+
+
+  onMouseDown(event: MouseEvent) {
+    this.pressTimer = setTimeout(() => {
+      this.dragEnabled = true;
+      // this.showDragHint(); // Entferne diese Zeile oder implementiere die Methode
+    }, 50); // Dauer des langen Klicks in Millisekunden
+  }
+  
+  onMouseUp(event: MouseEvent) {
+    clearTimeout(this.pressTimer);
+  }
+  
+  onMouseLeave(event: MouseEvent) {
+    clearTimeout(this.pressTimer);
+  }
+
+  showDragHint() {
+    this.isDragging = true;
+  }
+
+  hideDragHint() {
+    this.isDragging = false;
+  }
+
+  
+  drop(event: CdkDragDrop<any[]>) {
+    const pointerPosition = event.dropPoint;
+    const draggedItem = event.item.element.nativeElement as HTMLElement;
+  
+    // Alle Kacheln im Grid abrufen und zu HTMLElement[] casten
+    const draggableItems = Array.from(event.container.element.nativeElement.querySelectorAll('.mat-cards')) as HTMLElement[];
+  
+    // Entfernen Sie die gezogene Kachel aus der Liste der zu überprüfenden Elemente
+    const otherItems = draggableItems.filter(item => item !== draggedItem);
+  
+    let closestIndex = event.previousIndex;
+    let minDistance = Number.MAX_SAFE_INTEGER;
+  
+    otherItems.forEach((item: HTMLElement, index: number) => {
+      const rect = item.getBoundingClientRect();
+      const itemCenter = {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      };
+  
+      const distance = Math.hypot(pointerPosition.x - itemCenter.x, pointerPosition.y - itemCenter.y);
+  
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = draggableItems.indexOf(item);
+      }
+    });
+  
+    if (closestIndex !== -1 && closestIndex !== event.previousIndex) {
+      moveItemInArray(this.filteredLinks, event.previousIndex, closestIndex);
+      this.updateWebsiteOrder();
+    }
+  }
+  
+
+  updateWebsiteOrder() {
+    const token = localStorage.getItem('token');
+    const url = 'http://localhost:3000/api/links/updateOrder';
+  
+    // Aktualisieren der 'order'-Eigenschaft jedes Links basierend auf der neuen Position
+    const orderData = this.filteredLinks.map((link, index) => ({
+      _id: link._id,
+      order: index
+    }));
+  
+    // Senden der aktualisierten Reihenfolge an das Backend
+    this.http.post(url, { orderData }, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).subscribe({
+      next: () => {
+        console.log('Reihenfolge erfolgreich aktualisiert');
+      },
+      error: (error) => {
+        console.error('Fehler beim Aktualisieren der Reihenfolge:', error);
+      },
+    });
+  }
+  
+  
+
+  
+  
+  
+  
+  
+  
   
 
   @Input() category: string = '';  // Empfängt die ausgewählte Kategorie
@@ -94,6 +213,8 @@ export class DashboardComponent {
     })
     .pipe(
       tap(data => {
+        // Sortiere die Daten nach 'order'
+        data.sort((a, b) => a.order - b.order);
         this.links = data.map(link => ({
           _id: link._id,
           title: link.title,
@@ -102,7 +223,8 @@ export class DashboardComponent {
           gradient: link.gradient || '',
           description: link.description || '',
           username: link.username || '',
-          category: link.category || ''
+          category: link.category || '',
+          order: link.order || 0
         }));
         this.filterLinksByCategory(this.selectedCategory);
       }),
@@ -110,6 +232,7 @@ export class DashboardComponent {
     )
     .subscribe();
   }
+  
 
   onCategorySelect(category: string): void {
     this.selectedCategory = category;  // Kategorie als Zeichenkette speichern

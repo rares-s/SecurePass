@@ -36,9 +36,26 @@
 -->
 
 
-  <div class="allCards" fxLayout="row wrap">
-    <div *ngFor="let x of filteredLinks" class="mat-cards">
-      <mat-card (click)="openDetailDialog(x)" class="card" [ngStyle]="{'background': x.gradient}">
+<div
+  class="allCards"
+  cdkDropList
+  cdkDropListSortingDisabled="true"
+  (cdkDropListDropped)="drop($event)"
+  [cdkDropListData]="filteredLinks"
+>
+<div
+*ngFor="let x of filteredLinks; let i = index"
+class="mat-cards"
+[ngClass]="{'wiggle': isDragging}"
+cdkDrag
+(cdkDragStarted)="onDragStarted($event)"
+(cdkDragEnded)="onDragEnded($event)"
+>
+    <mat-card
+      (click)="onCardClick(x)"
+      class="card"
+      [ngStyle]="{'background': x.gradient}"
+    >
         <mat-card-title>
           {{ x.title }}
         </mat-card-title>
@@ -56,10 +73,15 @@
     </div>
   </div>
 
+  <div *ngIf="isDragging" class="drag-hint">
+    Drag-and-Drop-Modus aktiv
+  </div>
+
+  </div>
 
 
 
 
 
 
-</div>
+
