@@ -63,7 +63,7 @@ export class RegisterComponent {
     }
 
     if (this.passwordStrength < 100) {
-      this.showSnackbar('Passwort erfüllt nicht die Sicherheitsanforderungen.');
+      this.showSnackbar('Passwort erfüllt nicht die Sicherheitsanforderungen. Großbuchstabe & Sonderzeichen & Zahl müssen enthalten sein.');
       return;
     }
   

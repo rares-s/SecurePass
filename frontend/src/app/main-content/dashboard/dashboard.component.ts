@@ -163,13 +163,6 @@ export class DashboardComponent {
   
   
 
-  
-  
-  
-  
-  
-  
-  
 
   @Input() category: string = '';  // Empfängt die ausgewählte Kategorie
 

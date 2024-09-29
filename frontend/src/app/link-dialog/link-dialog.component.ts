@@ -40,12 +40,12 @@ export class LinkDialogComponent {
   public link: string = ''; 
   public label: string = '';
   public password: string= '';
-  public description: string = ''; // Beschreibung hinzufügen
-  public username: string = ''; // Username hinzufügen
-  public categories: string[] = ['Arbeit', 'SocialMedia', 'Privat', 'Sonstiges'];  // Add this array for categories
-  public category: string = '';  // Add a binding for the selected category
-  public passwordStrength: number = 0;  // Variable für Passwortstärke
-  public passwordStrengthDescription: string = 'Schwach';  // Initialize with a default value
+  public description: string = ''; 
+  public username: string = ''; 
+  public categories: string[] = ['Arbeit', 'SocialMedia', 'Privat', 'Sonstiges'];  
+  public category: string = '';  
+  public passwordStrength: number = 0;  
+  public passwordStrengthDescription: string = 'Schwach';  
   
  
   

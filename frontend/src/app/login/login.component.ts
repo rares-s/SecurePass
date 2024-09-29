@@ -44,10 +44,10 @@ export class LoginComponent {
       next: (response: any) => {
         localStorage.setItem('token', response.token);
         localStorage.setItem('email', this.email);
-        this.router.navigate(['/home/dashboard']);  // Weiterleitung zum Dashboard
+        this.router.navigate(['/home/dashboard']);  
       },
       error: (error) => {
-        this.showSnackbar('Email oder Passwort falsch'); // Show error message when login fails
+        this.showSnackbar('Email oder Passwort falsch'); 
         console.error('Login failed', error);
       }
     });
