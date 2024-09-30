@@ -67,7 +67,7 @@ router.delete('/:websiteId', authMiddleware, async (req, res) => {
     }
 
     // Entferne die Webseite anhand der ID
-    user.websites.id(req.params.websiteId).remove();
+    user.websites.pull(req.params.websiteId);
     await user.save();
 
     res.json({ message: 'Website removed' });
@@ -76,6 +76,7 @@ router.delete('/:websiteId', authMiddleware, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 
 // Route zum Aktualisieren einer spezifischen Website
 router.put('/:websiteId', authMiddleware, async (req, res) => {
