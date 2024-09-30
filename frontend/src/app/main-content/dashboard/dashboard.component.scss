@@ -18,12 +18,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url(../../../assets/background2.svg); /* Same background image */
+  background-image: url(../../../assets/background2.svg); 
   background-size: cover;
   background-position: center;
-  filter: blur(20px);  /* Adjust blur intensity here */
-  z-index: -1;  /* Place the blurred background behind content */
-  opacity: 0.7;  /* Optional: adjust opacity */
+  filter: blur(20px);  
+  z-index: -1;  
+  opacity: 0.7;  
   border-radius: 50%;
 }
 
@@ -67,43 +67,43 @@
   cursor: pointer;
   color: white;
 
-/* Optional: Bei Hover einen subtilen Effekt */
+
 &:hover {
-  color: #8fc5ff; /* Apple-ähnliches Blau für Hover-Effekt */
+  color: #8fc5ff; 
   mat-icon {
     color: #8fc5ff;
   }
 }
 
-   /* Button Delete */
+
 .button-delete {
   position: absolute;
-  top: -10px; /* Position weiter oben */
-  right: -10px; /* Position weiter rechts */
-  background-color: rgba(200, 200, 200, 0.8); /* Dezentes Apple-like Grau */
-  border-radius: 50%; /* Runde Form */
+  top: -10px; 
+  right: -10px; 
+  background-color: rgba(200, 200, 200, 0.8); 
+  border-radius: 50%; 
   width: 20px;
   height: 20px;
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  opacity: 0; /* Unsichtbar, bis man über die Kachel hovert */
-  transition: opacity 0.3s ease, transform 0.3s ease; /* Sanfte Einblendung und Hover-Effekt */
+  justify-content: center; 
+  align-items: center; 
+  opacity: 0; 
+  transition: opacity 0.3s ease, transform 0.3s ease; 
   cursor: pointer;
 }
 
 &:hover .button-delete {
-  opacity: 1; /* Sichtbar, wenn man über die Kachel hovert */
-  transform: scale(1.1); /* Leichtes Vergrößern bei Hover */
+  opacity: 1; 
+  transform: scale(1.1); 
 }
 
 /* Icon Styling */
 .button-delete mat-icon {
-  font-size: 16px; /* Kleinere Schriftgröße für das X */
-  color: #666; /* Graues X, passend zum Apple-Look */
-  display: flex; /* Add this to center the icon */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
+  font-size: 16px; 
+  color: #666; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
 }
 }
 
@@ -161,7 +161,7 @@
 
 .reset-button:hover {
   background-color: #0164ab;
-  transform: translateY(-1px); /* reduced hover effect */
+  transform: translateY(-1px); 
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -182,7 +182,7 @@
 
 .cardHinzufuegen:hover {
   background-color: rgb(25, 142, 25);
-  transform: translateY(-1px); /* reduced hover effect */
+  transform: translateY(-1px); 
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -192,32 +192,32 @@
 }
 
 .reset-icon {
-  color: #0069d9; /* slightly darker shade for reset icon */
+  color: #0069d9; 
 }
 
 .category {
   font-size: 12px;
-  color: #8fc5ff; /* Dezentes Apple-ähnliches Grau */
+  color: #8fc5ff; 
   position: absolute;
   bottom: 8px;
   left: 8px;
   display: flex;
-  align-items: center; /* Vertikale Zentrierung von Icon und Text */
-  font-weight: 500; /* Leichte Fettschrift für besseren Kontrast */
+  align-items: center; 
+  font-weight: 500; 
   
 
   /* Style für das Icon */
   mat-icon {
-    font-size: 12px; /* Etwas größer, damit es auf Augenhöhe mit dem Text ist */
-    margin-right: 6px; /* Abstand zwischen Icon und Text */
-    color: #a1a1a6; /* Etwas helleres Grau für das Icon */
-    vertical-align: middle; /* Ausrichtung mit dem Text */
+    font-size: 12px; 
+    margin-right: 6px; 
+    color: #a1a1a6; 
+    vertical-align: middle; 
     margin-top: 8px;
   }
 
-  /* Optional: Bei Hover einen subtilen Effekt */
+  
   &:hover {
-    color: #8fc5ff; /* Apple-ähnliches Blau für Hover-Effekt */
+    color: #8fc5ff; 
     mat-icon {
       color: #8fc5ff;
     }
@@ -226,7 +226,7 @@
 
 .drag-mode {
   cursor: move;
-  // Weitere Stile für den Drag-Modus
+
 }
 
 .cdk-drop-list {

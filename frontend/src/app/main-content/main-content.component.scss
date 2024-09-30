@@ -27,15 +27,15 @@ a {
  justify-content: flex-start;
  align-items: center;
  margin: 20px;
- color: #FFFFFF; // Weiß für Links
+ color: #FFFFFF; 
  font-size: 1rem;
- background-color: transparent; // Startet ohne Hintergrundfarbe
- border-radius: 15px; // Initiale Abrundung
+ background-color: transparent; 
+ border-radius: 15px; 
 
  &:hover {
-   background-color: #E07A5F; // Warmkorallenrot beim Hover
-   color: #FFFFFF; // Weißer Text beim Hover
-   border-radius: 15px; // Abrundung beim Hover
+   background-color: #E07A5F; 
+   color: #FFFFFF; 
+   border-radius: 15px; 
  }
 }
 
@@ -96,8 +96,8 @@ li {
  display: flex;
  flex-direction: column;
  width: 100%;
- background-color: #F0F4F8; // Helles Grau für den Hintergrund
- color: #333333; // Dunkles Grau für den Text
+ background-color: #F0F4F8; 
+ color: #333333; 
  margin-top: 16px;
 }
 
@@ -113,14 +113,14 @@ li {
   align-items: center;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1); /* Subtile Änderung des Hintergrunds */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sanfter Schatten */
-    transform: scale(1.05); /* Leichte Vergrößerung */
-    border-radius: 50%; /* Runde Form für moderne Optik */
+    background-color: rgba(255, 255, 255, 0.1); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    transform: scale(1.05); 
+    border-radius: 50%; 
     cursor: pointer;
   }
 
-  /* Optional: Ein Übergang, um den Effekt weicher zu machen */
+
   transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 

@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';  // Import CommonModule to enabl
   selector: 'app-register',
   standalone: true,
   imports: [
-    FormsModule,  // <== FormsModule importieren, damit [(ngModel)] funktioniert
+    FormsModule,  
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
@@ -29,8 +29,8 @@ export class RegisterComponent {
   passwordConfirm: string = ''; 
   username: string = '';
 
-  passwordStrength: number = 0;  // Variable für Passwortstärke
-  passwordStrengthDescription: string = 'Schwach';  // Initialize with a default value
+  passwordStrength: number = 0;  
+  passwordStrengthDescription: string = 'Schwach';  
 
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {} // Inject MatSnackBar
 
@@ -41,20 +41,20 @@ export class RegisterComponent {
       return;
     }
 
-    // Check if username is empty
+    
     if (!this.username.trim()) {
       this.showSnackbar('Bitte Benutzernamen eingeben.');
       return;
     }
   
-    // Check for valid email format using a regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple regex for validating email format
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
     if (!emailRegex.test(this.email)) {
       this.showSnackbar('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
       return;
     }
   
-    // Check if passwords match
+    
     if (this.password !== this.passwordConfirm) {  
       this.showSnackbar('Passwörter stimmen nicht überein.');
       this.password = '';  
@@ -67,7 +67,7 @@ export class RegisterComponent {
       return;
     }
   
-    // Submit registration data
+    
     this.http.post('http://localhost:3000/api/auth/register', {
       username: this.username, 
       email: this.email, 
@@ -75,12 +75,12 @@ export class RegisterComponent {
     })
     .subscribe({
       next: (response: any) => {
-        localStorage.setItem('token', response.token);  // Speichere den Token
+        localStorage.setItem('token', response.token);  
         localStorage.setItem('email', this.email); 
-        this.router.navigate(['/home/dashboard']);      // Weiterleiten nach Registrierung
+        this.router.navigate(['/home/dashboard']);      
       },
       error: (error) => {
-        if (error.status === 409) {  // Assuming the server sends a 409 status code for existing email
+        if (error.status === 409) {  
           this.showSnackbar('E-Mail-Adresse wird bereits verwendet.');
         } else {
           this.showSnackbar('Registrierung fehlgeschlagen. Überprüfen Sie Ihre Daten.');
@@ -93,27 +93,27 @@ export class RegisterComponent {
   checkPasswordStrength() {
     let strength = 0;
   
-    // Check length
+    
     if (this.password.length >= 8) {
-      strength += 30; // Adjust to give more weight to length
+      strength += 30; 
     }
     if (this.password.length >= 12) {
-      strength += 20; // Add bonus for extra length
+      strength += 20; 
     }
   
-    // Check for uppercase, numbers, and special characters
+    
     if (/[A-Z]/.test(this.password)) strength += 20;
     if (/\d/.test(this.password)) strength += 10;
     if (/[!@#$%^&*(),.?":{}|<>]/.test(this.password)) strength += 15;
     if (/[a-z]/.test(this.password)) strength += 10;
   
-    // Reduce penalty for repeated characters, if needed
+   
     if (/(.)\1{2,}/.test(this.password)) strength -= 5;
   
-    // Cap the strength to 100
+    
     this.passwordStrength = Math.min(Math.max(strength, 0), 100);
   
-    // Assign strength description
+   
     if (this.passwordStrength <= 30) {
       this.passwordStrengthDescription = 'Schwach';
     } else if (this.passwordStrength <= 60) {
@@ -136,7 +136,7 @@ export class RegisterComponent {
     return emailPattern.test(email);
   }
   
-  // Snackbar method for displaying messages
+  
   showSnackbar(message: string) {
     this.snackBar.open(message, 'OK', {
       duration: 3000, 
@@ -146,6 +146,6 @@ export class RegisterComponent {
   }
 
   routeLogin() {
-    this.router.navigate(['/']); // Navigate to login page
+    this.router.navigate(['/']); 
   }
 }

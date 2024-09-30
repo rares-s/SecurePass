@@ -293,7 +293,6 @@ export class DashboardComponent {
       title = 'https://' + title;
     }
   
-    // Verwende entweder die Benutzerfarbe oder eine zufällige Farbe
     const finalGradient = this.generateGradientWithUserColor(gradient);
   
     const newLink = { title: url, url: title, password, gradient: finalGradient, description, username, category };
@@ -344,23 +343,23 @@ generateGradientWithUserColor(userColor: string): string {
   
 
 deleteCard(id: string, title: string) {
-  // Open a Snackbar asking the user to confirm the deletion
+
   const snackBarRef = this.snackBar.open(`Möchten Sie die Kachel "${title}" wirklich löschen?`, 'Löschen', {
     horizontalPosition: 'center',
     verticalPosition: 'top',
-    duration: 3000, // Snackbar will disappear after 3 seconds
+    duration: 3000, 
   });
 
-  // When the user clicks on "Löschen"
+
   snackBarRef.onAction().subscribe(() => {
-    // Ask for final confirmation with another Snackbar
+    
     const confirmSnackBar = this.snackBar.open('Sind Sie sicher?', 'Ja', {
       horizontalPosition: 'center',
       verticalPosition: 'top',
       duration: 3000,
     });
 
-    // If "Ja" is clicked, delete the card
+
     confirmSnackBar.onAction().subscribe(() => {
       const token = localStorage.getItem('token');
       const url = `http://localhost:3000/api/links/${id}`;
@@ -371,7 +370,7 @@ deleteCard(id: string, title: string) {
       .pipe(
         tap(() => {
           this.links = this.links.filter(link => link._id !== id);
-          this.filteredLinks = this.links; // Update filteredLinks as well
+          this.filteredLinks = this.links; 
         }),
         catchError(this.handleError)
       )
@@ -379,7 +378,6 @@ deleteCard(id: string, title: string) {
     });
   });
 
-  // If the user dismisses the snackbars, nothing will happen
 }
 
 
@@ -404,7 +402,7 @@ deleteCard(id: string, title: string) {
         _id: link._id, 
         url: link.url, 
         label: link.title, 
-        password: link.password,  // Ensure password is passed correctly
+        password: link.password,  
         description: link.description, 
         username: link.username, 
         category: link.category 
@@ -414,13 +412,12 @@ deleteCard(id: string, title: string) {
     dialogRef.afterOpened().subscribe(() => {
       const dialogInstance = dialogRef.componentInstance;
       if (dialogInstance && dialogInstance.password) {
-        dialogInstance.checkPasswordStrength();  // Check password strength right after the dialog opens
+        dialogInstance.checkPasswordStrength();  
       }
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Call your backend again after the dialog is closed, to save changes
         this.loadLinks();
       }
     });

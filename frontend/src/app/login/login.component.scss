@@ -21,7 +21,7 @@
   width: 100%;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Leichterer, weicherer Schatten */
   border-radius: 25px;
-  backdrop-filter: blur(100px); /* Weichzeichnereffekt für den Apple-Look */
+  backdrop-filter: blur(100px); /* Weichzeichnereffekt */
   opacity: 0.96;
 }
 
@@ -91,34 +91,34 @@ img{
 // Kompakteres Design für die Input-Felder
 mat-form-field {
   width: 100%;  // Breite des Feldes
-  margin-bottom: 2px;  // Reduziere den Abstand zwischen den Feldern
+  margin-bottom: 2px;  
   
   .mat-form-field-wrapper {
-    padding-bottom: 0;  // Reduziere den Abstand im Inneren
+    padding-bottom: 0;  
   }
   
   .mat-input-element {
     font-size: 14px;  // Kleinere Schriftgröße
-    padding: 8px;  // Weniger Innenabstand
+    padding: 8px;  
   }
 
   .mat-form-field-label {
-    font-size: 12px;  // Kleinere Beschriftung
+    font-size: 12px;  
   }
 }
 
 // Kompakteres Design für die Buttons
 button {
-  min-width: unset;  // Entferne die minimale Breite
-  padding: 4px 12px;  // Reduziere das Padding im Inneren
-  font-size: 14px;  // Kleinere Schriftgröße
-  margin-top: 12px;  // Reduziere den oberen Abstand zum Button
+  min-width: unset;  
+  padding: 4px 12px;  
+  font-size: 14px;  
+  margin-top: 12px;  
 
   &.mat-raised-button {
-    height: 36px;  // Kleinere Höhe für die Buttons
+    height: 36px;  
   }
 
   &.mat-button {
-    height: 32px;  // Höhe für flache Buttons
+    height: 32px;  
   }
 }

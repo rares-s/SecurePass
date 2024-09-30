@@ -80,25 +80,25 @@ export class LinkDialogComponent {
   
     // Check length
     if (this.password.length >= 8) {
-      strength += 30; // Adjust to give more weight to length
+      strength += 30; 
     }
     if (this.password.length >= 12) {
-      strength += 20; // Add bonus for extra length
+      strength += 20; 
     }
   
-    // Check for uppercase, numbers, and special characters
+    
     if (/[A-Z]/.test(this.password)) strength += 20;
     if (/\d/.test(this.password)) strength += 10;
     if (/[!@#$%^&*(),.?":{}|<>]/.test(this.password)) strength += 15;
     if (/[a-z]/.test(this.password)) strength += 10;
   
-    // Reduce penalty for repeated characters, if needed
+    
     if (/(.)\1{2,}/.test(this.password)) strength -= 5;
   
-    // Cap the strength to 100
+    
     this.passwordStrength = Math.min(Math.max(strength, 0), 100);
   
-    // Assign strength description
+    
     if (this.passwordStrength <= 30) {
       this.passwordStrengthDescription = 'Schwach';
     } else if (this.passwordStrength <= 60) {
@@ -113,7 +113,7 @@ export class LinkDialogComponent {
   }
   
 
-// Methode zum Generieren eines sicheren Passworts
+
 generatePassword(): void {
   const parts = [];
   const charsetLower = 'abcdefghijklmnopqrstuvwxyz';
@@ -124,15 +124,15 @@ generatePassword(): void {
   for (let i = 0; i < 3; i++) {
     let part = '';
     
-    // Ensure each part contains at least one of each type: lowercase, uppercase, number, special character
+    
     part += charsetLower[Math.floor(Math.random() * charsetLower.length)];
     part += charsetUpper[Math.floor(Math.random() * charsetUpper.length)];
     part += charsetNumbers[Math.floor(Math.random() * charsetNumbers.length)];
     part += charsetSpecial[Math.floor(Math.random() * charsetSpecial.length)];
     
-    // Fill the rest of the part with random characters from all charsets
+    
     const allChars = charsetLower + charsetUpper + charsetNumbers + charsetSpecial;
-    for (let j = 4; j < 6; j++) { // Already added 4 characters, fill the rest
+    for (let j = 4; j < 6; j++) { 
       const randomIndex = Math.floor(Math.random() * allChars.length);
       part += allChars[randomIndex];
     }
@@ -142,7 +142,7 @@ generatePassword(): void {
   const generatedPassword = `${parts[0]}-${parts[1]}-${parts[2]}`;
   this.password = generatedPassword;  // Setze das generierte Passwort in das Eingabefeld
 
-  // Immediately check the password strength after generation
+  
   this.checkPasswordStrength();
 }
 

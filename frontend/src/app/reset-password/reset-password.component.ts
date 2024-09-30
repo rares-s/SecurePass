@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms'; // FormsModule importieren
-import { MatFormFieldModule } from '@angular/material/form-field'; // MatFormFieldModule importieren
-import { MatInputModule } from '@angular/material/input'; // MatInputModule importieren
-import { MatButtonModule } from '@angular/material/button'; // MatButtonModule importieren
+import { FormsModule } from '@angular/forms'; 
+import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { MatInputModule } from '@angular/material/input'; 
+import { MatButtonModule } from '@angular/material/button'; 
 
 @Component({
   selector: 'app-reset-password',
-  standalone: true, // Definiert die Komponente als Standalone
+  standalone: true, 
   imports: [
     FormsModule,
     MatFormFieldModule,

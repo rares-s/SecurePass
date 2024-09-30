@@ -58,12 +58,12 @@ export class LoginComponent {
     return emailRegex.test(email);
   }
   
-  // Method to display the snackbar with a custom message
+  
   showSnackbar(message: string) {
     this.snackBar.open(message, 'OK', {
-      duration: 3000, // Duration in milliseconds
-      verticalPosition: 'top', // Position: 'top' or 'bottom'
-      horizontalPosition: 'center' // Position: 'start', 'center', or 'end'
+      duration: 3000, 
+      verticalPosition: 'top', 
+      horizontalPosition: 'center' 
     });
   }
 

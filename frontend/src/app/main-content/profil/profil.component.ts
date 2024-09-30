@@ -24,8 +24,8 @@ export class ProfilComponent {
 
   private apiUrl = 'http://localhost:3000/api/users';
   public userData: any; // Hier werden die Benutzerdaten gespeichert
-  oldPassword: string = ''; // Bind to the input field for old password
-  newPassword: string = ''; // Bind to the input field for new password
+  oldPassword: string = ''; 
+  newPassword: string = ''; 
 
   constructor(private router: Router, private http: HttpClient, private snackBar: MatSnackBar) {
     this.checkAuthentication();  // Prüft, ob der Benutzer eingeloggt ist
@@ -92,7 +92,7 @@ loadUser(token: string) {
 
 // Password change functionality
 changePassword() {
-  const userId = this.userData._id; // Get the user ID from userData
+  const userId = this.userData._id; 
   const payload = { oldPassword: this.oldPassword, newPassword: this.newPassword };
   
   this.http.put(`http://localhost:3000/api/users/${userId}/changePassword`, payload)
@@ -104,7 +104,7 @@ changePassword() {
           duration: 3000
         });
 
-        // Reset the input fields
+        
         this.oldPassword = '';
         this.newPassword = '';
       },
@@ -126,25 +126,25 @@ changePassword() {
     const snackBarRef = this.snackBar.open('Möchten Sie Ihr Konto wirklich löschen?', 'Löschen', {
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      duration: 5000, // Duration for how long the snackbar remains on the screen
+      duration: 5000, 
     });
   
-    // If the user clicks on "Löschen"
+    
     snackBarRef.onAction().subscribe(() => {
-      // Show another snackBar asking for final confirmation or cancellation
+      
       const confirmSnackBar = this.snackBar.open('Sind Sie sicher?', 'Ja', {
         horizontalPosition: 'center',
         verticalPosition: 'top',
         duration: 5000,
       });
   
-      // If "Ja" is clicked, the account will be deleted
+      
       confirmSnackBar.onAction().subscribe(() => {
-        this.deleteAccount(); // Call the deleteAccount function
+        this.deleteAccount(); 
       });
     });
   
-    // The user can simply dismiss the snackbar (implicitly choosing "Nein") by not clicking "Löschen"
+
   }
   
 
@@ -166,7 +166,7 @@ changePassword() {
         next: () => {
           this.snackBar.open('Account wurde erfolgreich gelöscht.', 'OK', {horizontalPosition: 'center',
             verticalPosition: 'top',
-            duration: 5000}); // Open snackbar
+            duration: 5000}); 
           this.onLogout(); // Logge den Benutzer aus und leite zur Login-Seite weiter
         },
         error: (error) => {

@@ -1,13 +1,13 @@
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; // Importiere MatSnackBar und MatSnackBarModule
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar'; 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon'; // MatIconModule importieren
+import { MatIconModule } from '@angular/material/icon'; 
 import { FormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
-import { HttpClient, HttpClientModule } from '@angular/common/http'; // HttpClient importieren
+import { MatCardModule } from '@angular/material/card';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -23,8 +23,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule, // MatIconModule hier hinzufügen
-    MatSnackBarModule, // MatSnackBarModule hinzufügen
+    MatIconModule, 
+    MatSnackBarModule, 
     FormsModule,
     MatCardModule,
     HttpClientModule,
@@ -34,7 +34,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
   ]
 })
 export class LinkDetailDialogComponent {
-  @ViewChild('clipboardButton') clipboardButton!: ElementRef; // Non-null assertion operator verwendet
+  @ViewChild('clipboardButton') clipboardButton!: ElementRef; 
 
   link: string = ''; 
   label: string = '';
@@ -45,9 +45,9 @@ export class LinkDetailDialogComponent {
 
   categories: string[] = ['Arbeit', 'SocialMedia', 'Privat', 'Sonstiges'];
 
-  isPasswordVisible = false;  // Steuert die Sichtbarkeit des Passworts
-  passwordStrength: number = 0;  // Variable für Passwortstärke
-  passwordStrengthDescription: string = 'Schwach';  // Initialize with a default value
+  isPasswordVisible = false;  
+  passwordStrength: number = 0;  
+  passwordStrengthDescription: string = 'Schwach';  
 
 
   togglePasswordVisibility(): void {
@@ -67,39 +67,34 @@ export class LinkDetailDialogComponent {
     this.password = data.password;
     this.description = data.description || '';
     this.username = data.username || '';
-    this.category = data.category || ''; // Set the category value here
+    this.category = data.category || ''; 
 
   }
   
 
-  // Function to calculate password strength
 checkPasswordStrength(): void {
   let strength = 0;
 
-  // Use this.data.password directly here
   const password = this.data.password || ''; 
 
   // Check length
   if (password.length >= 8) {
-    strength += 30; // Adjust to give more weight to length
+    strength += 30; 
   }
   if (password.length >= 12) {
-    strength += 20; // Add bonus for extra length
+    strength += 20; 
   }
 
-  // Check for uppercase, numbers, and special characters
   if (/[A-Z]/.test(password)) strength += 20;
   if (/\d/.test(password)) strength += 10;
   if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 15;
   if (/[a-z]/.test(password)) strength += 10;
 
-  // Reduce penalty for repeated characters, if needed
   if (/(.)\1{2,}/.test(password)) strength -= 5;
 
-  // Cap the strength to 100
+
   this.passwordStrength = Math.min(Math.max(strength, 0), 100);
 
-   // Assign strength description
    if (this.passwordStrength <= 30) {
     this.passwordStrengthDescription = 'Schwach';
   } else if (this.passwordStrength <= 60) {
@@ -125,15 +120,14 @@ generatePassword(): void {
   for (let i = 0; i < 3; i++) {
     let part = '';
     
-    // Ensure each part contains at least one of each type: lowercase, uppercase, number, special character
     part += charsetLower[Math.floor(Math.random() * charsetLower.length)];
     part += charsetUpper[Math.floor(Math.random() * charsetUpper.length)];
     part += charsetNumbers[Math.floor(Math.random() * charsetNumbers.length)];
     part += charsetSpecial[Math.floor(Math.random() * charsetSpecial.length)];
     
-    // Fill the rest of the part with random characters from all charsets
+
     const allChars = charsetLower + charsetUpper + charsetNumbers + charsetSpecial;
-    for (let j = 4; j < 6; j++) { // Already added 4 characters, fill the rest
+    for (let j = 4; j < 6; j++) { 
       const randomIndex = Math.floor(Math.random() * allChars.length);
       part += allChars[randomIndex];
     }
@@ -142,11 +136,9 @@ generatePassword(): void {
 
   const generatedPassword = `${parts[0]}-${parts[1]}-${parts[2]}`;
 
-  // Update both 'this.password' and 'data.password' for UI and logic consistency
   this.password = generatedPassword;
-  this.data.password = generatedPassword;  // Ensure this is reflected in the input field
+  this.data.password = generatedPassword;  
 
-  // Immediately check the password strength after generation
   this.checkPasswordStrength();
 }
 
@@ -209,7 +201,7 @@ openWebsite(url: string): void {
       verticalPosition:'top',
       horizontalPosition: 'center'
     });
-    // Optional: Zeige Animation oder Feedback für das Kopieren
+    
     this.clipboardButton.nativeElement.classList.add('copied');
     setTimeout(() => {
       this.clipboardButton.nativeElement.classList.remove('copied');

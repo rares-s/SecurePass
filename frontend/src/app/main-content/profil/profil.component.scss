@@ -18,14 +18,14 @@
     background-color: rgba(255, 255, 255, 0.073);
     border-radius: 25px;
     gap: 30px;
-    backdrop-filter: blur(20px); /* backdrop-filter auf den Container anwenden */
+    backdrop-filter: blur(20px); 
   }
 
 .flex {
     display: flex;
     flex-direction: column;
-    background-color: #ffffff; // Hintergrundfarbe des Containers
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); // Schatteneffekt
+    background-color: #ffffff; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
     height: 300px;
     width: 628px;
     border-radius: 15px;
@@ -51,7 +51,7 @@ h2 {
 }
 
 .pw-info{
-    background-color: #f7f7f7; /* light gray background */
+    background-color: #f7f7f7; 
     display: flex;
     justify-content: space-around;
     padding: 20px;
@@ -63,7 +63,7 @@ h2 {
 }
 
 .profile-info {
-    background-color: #f7f7f7; /* light gray background */
+    background-color: #f7f7f7; 
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.14);
@@ -84,48 +84,48 @@ h2 {
   
   .profile-info th {
     font-weight: bold;
-    color: #333; /* dark gray text */
+    color: #333;
   }
   
   .profile-info td {
     font-size: 16px;
-    color: #666; /* medium gray text */
+    color: #666; 
   }
   
   .profile-value {
     font-size: 18px;
     font-weight: bold;
-    color: #333; /* dark gray text */
+    color: #333; 
   }
 
   .profile-info th, .profile-info td {
     padding: 10px;
     text-align: left;
-    vertical-align: top; /* Add this line to align content to the top */
+    vertical-align: top; 
   }
 
 
   .account {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Add this line to center the content horizontally */
+    align-items: center; 
   }
   
   .account label {
     display: block;
-    margin-bottom: 10px; /* Add some space between the label and input field */
+    margin-bottom: 10px; 
   }
   
   .account input[type="text"] {
-    width: 100%; /* Make the input field full-width */
+    width: 100%; 
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc; /* Add some basic styling to the input field */
+    border: 1px solid #ccc; 
   }
   
   .account button {
-    margin-top: 10px; /* Add some space between the input field and buttons */
-    margin-bottom: 10px; /* Add some space between the buttons */
+    margin-top: 10px; 
+    margin-bottom: 10px; 
   }
 
   .password-field{

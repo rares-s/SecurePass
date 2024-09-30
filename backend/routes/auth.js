@@ -55,7 +55,7 @@ router.post('/register', async (req, res) => {
   
   
 
-// Login eines Benutzers (keine authMiddleware hier)
+// Login eines Benutzers
 router.post('/login', async (req, res) => {
     console.log('Received email:', req.body.email);
     console.log('Received password:', req.body.password);

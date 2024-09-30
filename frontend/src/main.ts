@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent }, // explizite Route für Login
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Standard-Redirect zur Login-Seite
   { path: 'register', component: RegisterComponent }, // Route zur Registrierungsseite
-  { path: 'forgot-password', component: ForgotPasswordComponent },  // Neue Route für Passwort zurücksetzen
+  { path: 'forgot-password', component: ForgotPasswordComponent },  // Route für Passwort zurücksetzen
   { path: 'reset-password/:token', component: ResetPasswordComponent },
 
 

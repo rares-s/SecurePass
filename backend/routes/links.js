@@ -90,12 +90,11 @@ router.put('/:websiteId', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'Website not found' });
     }
 
-    // Aktualisiere die Felder der Webseite
     website.password = req.body.password || website.password;
     website.username = req.body.username !== undefined ? req.body.username : website.username;
     website.description = req.body.description !== undefined ? req.body.description : website.description;
     website.category = req.body.category !== undefined ? req.body.category : website.category;
-    // Füge hier das `order` Feld hinzu, falls es aktualisiert werden soll
+
     if (req.body.order !== undefined) {
       website.order = req.body.order;
     }
@@ -118,7 +117,6 @@ router.post('/updateOrder', authMiddleware, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Update the order for each website
     orderData.forEach(orderItem => {
       const website = user.websites.id(orderItem._id);
       if (website) {

@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-import { CommonModule } from '@angular/common';  // <-- Add CommonModule for *ngFor
+import { CommonModule } from '@angular/common';  
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 
@@ -15,7 +15,7 @@ export interface Section {
   name: string;
 }
 @Component({
-  selector: 'app-main-content', // Du kannst 'sidenav-autosize-example' wählen, wenn das bevorzugt ist
+  selector: 'app-main-content', 
   standalone: true,
   imports: [RouterOutlet, 
     MatToolbarModule, 
@@ -27,10 +27,10 @@ export interface Section {
     MatListModule,
     CommonModule,
     DashboardComponent
-  ], // Alle Importe aus beiden Komponenten
+  ], 
 
-  templateUrl: './main-content.component.html', // Wähle ein Template oder kombiniere sie
-  styleUrls: ['./main-content.component.scss',] // Beide CSS-Dateien zusammengeführt
+  templateUrl: './main-content.component.html', 
+  styleUrls: ['./main-content.component.scss',] 
 })
 
 
@@ -81,7 +81,6 @@ export class MainContentComponent{
     }
 
   selectCategory(category: string) {
-    //this.selectedCategory = category;  // Setzt die ausgewählte Kategorie
     this.router.navigate(['home/dashboard', category]);
   }
 
@@ -97,9 +96,9 @@ getCategoryIcon(category: string): string {
     case 'Sonstiges':
       return 'category';
       case 'Alle':
-        return 'apps';  // Hier das Icon ändern, z.B. 'list', 'apps', 'view_list'
+        return 'apps';  
     default:
-      return 'folder';  // Standard-Icon, falls nichts passt
+      return 'folder';  
   }
 }
 
