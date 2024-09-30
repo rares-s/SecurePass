@@ -308,6 +308,7 @@ export class DashboardComponent {
       catchError(this.handleError)
     )
     .subscribe();
+    this.loadLinks();
   }
   
   // Funktion zur Erstellung eines Gradienten mit der Benutzerfarbe oder einer zufälligen Farbe
